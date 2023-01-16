@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;700;900&family=Raleway:wght@100;300;500;700&display=swap');
+
+:root{
+    --bodyBack: #ffeaed;
+    --textColor: #1b2741;
+    --starColor: #f67034;
+    --sectionBack: #f7f6f9;
+}
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
+}
+body{
+    background-color: var(--bodyBack);
+    min-height: 100vh;
+    display: grid;
+    place-content: center;
+}
+
+.row{
+    width:100vw
+}
+.containernew{
+   
+    width: 100vw;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    
+}
+.header{
+    width: 100%;
+    text-align: center;
+}
+.header h1{
+    font-size: 4em;
+    text-transform: uppercase;
+    color: var(--textColor);
+}
+.products{
+    width: 100%;
+    align-self: center;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+.product{
+    position: relative;
+    background-color: var(--sectionBack);
+    width: 200px;
+    height: 140%;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 20px 40px;
+    border-radius: 10px;
+    transition: .3s;
+}
+.product:hover{
+    transform: translateY(-15px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+}
+.image{
+    width:50%;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    border-radius: 20px;
+}
+.image img{
+   
+    width:200%;
+   
+    border-radius: 20px;
+    
+}
+.namePrice{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.namePrice h3{
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: var(--textColor);
+}
+.namePrice span{
+    font-size: 15px;
+    color: var(--starColor);
+}
+
+.namePrice h3{
+    font-size: 15px;
+    text-transform: capitalize;
+    color: var(--textColor);
+}
+
+.product p{
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.stars svg{
+    font-size: 1.1em;
+    color: var(--starColor);
+}
+.buy{
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}
+.buy button{
+    padding: 4px 20px;
+    border-radius: 7px;
+    border: none;
+    background-color: var(--textColor);
+    color: var(--sectionBack);
+    font-size: 8px;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: .5s;
+}
+.buy button:hover{
+    transform: scale(1.1);
+}
+
+
+
+/* Navbar */
+
+/* Menu Dropdown */
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+.cf {
+    *zoom: 1;
+}
+
+.menu,
+.submenu {
+ margin: 0;
+ padding: 0;
+ list-style: none;
+}
+
+.menu {   
+ margin: 50px auto;
+ width: 800px;   
+ width: -moz-fit-content;
+ width: -webkit-fit-content;
+ width: fit-content; 
+}
+
+.menu > li {
+ background: #000;
+ float: left;
+ position: relative;
+ transform: skewX(25deg);
+}
+
+.menu a {
+ display: block;
+ color: #fff;
+ text-transform: uppercase;
+ text-decoration: none;
+ font-family: Arial, Helvetica;
+ font-size: 14px;
+}  
+
+.menu li:hover {
+ background: #e74c3c;
+}  
+
+.menu > li > a {
+ transform: skewX(-25deg);
+ padding: 1em 2em;
+}
+
+/* Dropdown */
+.submenu {
+ position: absolute;
+ width: 200px;
+ left: 50%; margin-left: -100px;
+ transform: skewX(-25deg);
+ transform-origin: left top;
+}
+
+.submenu li {
+ background-color: #34495e;
+ position: relative;
+ overflow: hidden;  
+}      
+
+.submenu > li > a {
+ padding: 1em 2em;   
+}
+
+.submenu > li::after {
+ content: '';
+ position: absolute;
+ top: -125%;
+ height: 100%;
+ width: 100%;   
+ box-shadow: 0 0 50px rgba(0, 0, 0, .9);   
+}  
+
+.submenu > li:nth-child(odd){
+ transform: skewX(-25deg) translateX(0);
+}
+
+.submenu > li:nth-child(odd) > a {
+ transform: skewX(25deg);
+}
+
+.submenu > li:nth-child(odd)::after {
+ right: -50%;
+ transform: skewX(-25deg) rotate(3deg);
+}    
+
+.submenu > li:nth-child(even){
+ transform: skewX(25deg) translateX(0);
+}
+
+.submenu > li:nth-child(even) > a {
+ transform: skewX(-25deg);
+}
+
+.submenu > li:nth-child(even)::after {
+ left: -50%;
+ transform: skewX(25deg) rotate(3deg);
+}
+
+/* Show dropdown */
+.submenu,
+.submenu li {
+ opacity: 0;
+ visibility: hidden;   
+}
+
+.submenu li {
+ transition: .2s ease transform;
+}
+
+.menu > li:hover .submenu,
+.menu > li:hover .submenu li {
+ opacity: 1;
+ visibility: visible;
+}  
+
+.menu > li:hover .submenu li:nth-child(even){
+ transform: skewX(25deg) translateX(15px);   
+}
+
+.menu > li:hover .submenu li:nth-child(odd){
+ transform: skewX(-25deg) translateX(-15px);   
+}
+
+
+

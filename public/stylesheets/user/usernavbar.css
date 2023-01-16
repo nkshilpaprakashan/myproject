@@ -1,0 +1,110 @@
+.nav-items{
+  margin-right: 100px;
+  padding: 5px;
+}
+.nav-icon{
+  margin-right: 40px;
+}
+.cart{
+  top: 1rem;
+  right: 3.4rem;
+  padding: 0px 6px;
+  font-size: small;
+  background: rgb(221, 221, 221);
+}
+.user{
+  top: 1rem;
+  right: 0.3rem;
+  padding: 0px 6px;
+  font-size: small;
+  background: rgb(221, 221, 221);
+}
+
+#user{
+  margin-left: -50px;
+}
+
+
+#slider{
+overflow: hidden;
+}
+
+
+
+
+/* carousal item */
+
+.carousel-item img {
+display: block;
+margin-left: auto;
+margin-right: auto;
+border-radius: 10px;
+width: 80%;
+height: 400px;
+
+
+
+}
+
+
+
+
+
+/* categories */
+
+.categories{
+
+width: 100%;
+
+}
+
+.wrapper{
+
+margin: auto;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+gap: 35px;
+
+}
+
+.categories-container{
+ 
+display: flex;
+gap: 50px;
+
+}
+
+.category img{
+
+border-radius: 100px;
+height: 200px;
+width: 200px;
+box-shadow: 0 0 20px 20px rgba(0,0,0,.1);
+
+}
+
+.category img:hover{
+transform: scale(1.1);
+
+}
+
+.category-body{
+  
+margin: auto;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+
+body{
+overflow-x: hidden;
+
+}
+
+
+
+
+

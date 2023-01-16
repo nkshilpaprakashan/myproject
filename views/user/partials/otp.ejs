@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<title>Document</title>
+	<link rel='stylesheet' href='/public/stylesheets/userstyle.css' />
+</head>
+
+<body>
+	<section class="sec">
+		<div class="container py-5 h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-12">
+					<div class="card card-registration card-registration-2" style="border-radius: 15px;">
+						<div class="card-body pt-10px">
+							<div class="row g-0">
+								<div class="col-lg-6">
+									<div class="p-5">
+										<form action="/otp" method="POST">
+											<h3 class="fw-normal mb-5" style="color:#8A5B42;">OTP Page</h3>
+
+
+
+											<div class="row">
+												<div class="col-md-6 mb-4 pb-2">
+
+
+													<div class="form-outline">
+														
+														<input type="text" id="otp"
+															class="form-control form-control-lg" name="otp" required />
+														<label class="form-label" for="form3Examplev2">Enter OTP</label>
+													</div>
+
+												</div>
+												
+												
+										<button type="submit" class="btn btn-light btn-lg"
+											data-mdb-ripple-color="dark">Submit OTP</button>
+
+										</form>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>

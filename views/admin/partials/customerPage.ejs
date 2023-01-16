@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta
+        name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Adding css connection -->
+        <link
+        rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+
+        <!-- Adding jquery connection -->
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <!-- Adding datatable connection -->
+        <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+        <!-- Initialising datatable connection -->
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+
+        <title>Document</title>
+        
+    </head>
+    <%-include('../layout/adminHeader')%>
+
+    <body>
+        <div class="container-fluid">
+        
+        <h1>Customer List</h1>
+
+
+        <table id="example" class="display container-fluid" style="width:100%" >
+            <thead>
+                <tr>
+                    <th style="background-color:#B87F2A">First Name</th>
+                    <th style="background-color:#B87F2A">Last Name</th>
+                    <th style="background-color:#B87F2A">E-mail</th>
+                    <th style="background-color:#B87F2A">Phone Numbers</th>
+                    <!-- <th style="background-color:#B87F2A">Phone Number 2</th> -->
+                    <th style="background-color:#B87F2A">House No.</th>
+                    <th style="background-color:#B87F2A">Area</th>
+                    <th style="background-color:#B87F2A">Pincode</th>
+                    <th style="background-color:#B87F2A">Place</th>
+                    <th style="background-color:#B87F2A">State</th>
+                    <th style="background-color:#B87F2A">Country</th>
+                    <th style="background-color:#B87F2A">Block/Unblock</th>
+                    <th style="background-color:#B87F2A">Edit</th>
+                    <th style="background-color:#B87F2A">Delete</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <% if(fulldata.length>0){
+            
+    
+                    for(let i=0;i<fulldata.length;i++){
+                        %>
+                    <tr style="background-color:#F3D6B7">
+                        <td>
+                            <a href="/edit" style="text-decoration:none; color:black"><%=fulldata[i].first_name%></a>
+                        </td>
+                        <td>
+                            <a href="/edit" style="text-decoration:none; color:black"><%=fulldata[i].last_name%></a>
+                        </td>
+                        <td>
+                            <a href="/edit" style="text-decoration:none; color:black"><%=fulldata[i].email%></a>
+                        </td>
+                        <td>
+                            <a href="/edit" style="text-decoration:none; color:black"><%=fulldata[i].phonenumber+","+fulldata[i].alternative_phonenumber%></a>
+                        </td>
+                        <!-- <td><a href="/edit" style="text-decoration:none; color:black"><%=fulldata[i].alternative_phonenumber%></a></td> -->
+                        <td>
+                            <a href="/edit" style="text-decoration:none; color:black"><%=fulldata[i].houseno%></a>
+                        </td>
+                        <td>
+                            <a href="/edit" style="text-decoration:none; color:black"><%=fulldata[i].area%></a>
+                        </td>
+                        <td>
+                            <a href="/edit" style="text-decoration:none; color:black"><%=fulldata[i].pincode%></a>
+                        </td>
+                        <td>
+                            <a href="/edit" style="text-decoration:none; color:black"><%=fulldata[i].place%></a>
+                        </td>
+                        <td>
+                            <a href="/edit" style="text-decoration:none; color:black"><%=fulldata[i].state%></a>
+                        </td>
+                        <td>
+                            <a href="/edit" style="text-decoration:none; color:black"><%=fulldata[i].country%></a>
+                        </td>
+
+                        <% if (fulldata[i].isBlocked===false) { %>
+                            <td>
+                                <a href="/adminloginpage/Dashboard/customers/blockuser/<%= fulldata[i]._id %>" class="btn btn-danger" onclick="return confirm('CLICK OK TO BLOCK')">
+                                    Block
+                                </a>
+                            </td>
+                        <% } else { %>
+                            <td>
+                                <a href="/adminloginpage/Dashboard/customers/unblockuser/<%= fulldata[i]._id %>" class="btn btn-success" onclick="return confirm('CLICK OK TO UNBLOCK')">
+                                    Unblock
+                                </a>
+                            </td>
+                        <% } %>
+
+
+                        <td>
+                            <button>
+                                <a href="/adminloginpage/Dashboard/customers/edits/<%=fulldata[i]._id%>" style="text-decoration:none">Edit</a>
+                            </button>
+                        </td>
+                        <td>
+                            <button>
+                                <a href="/adminloginpage/Dashboard/customers/delete/<%=fulldata[i]._id%>" style="text-decoration:none">Delete</a>
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <%
+                
+
+            }
+        }else{
+            %>
+
+        <td colspan="5">Users not found</td>
+    <%
+        }
+        %>
+
+  
+</table>
+</div></body></html>

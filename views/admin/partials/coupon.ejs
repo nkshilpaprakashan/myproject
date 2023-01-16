@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+     <!-- Adding css connection -->
+     <link
+     rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    
+        <!-- Adding jquery connection -->
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <!-- Adding datatable connection -->
+        <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+        <!-- Initialising datatable connection -->
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+</head>
+
+<%-include('../layout/adminHeader')%>
+<body>
+    <h1>Coupon Page</h1>
+   
+    
+    
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th style="background-color:#B87F2A">Sl No.</th>
+                <th style="background-color:#B87F2A">Coupon Code</th>
+                <th style="background-color:#B87F2A">Coupon Name</th>
+                <th style="background-color:#B87F2A">Discount</th>
+                <th style="background-color:#B87F2A">Starting Date</th>
+                <th style="background-color:#B87F2A">Expiry Date</th>
+                <th style="background-color:#B87F2A">Minimum Amount</th>
+                
+                <th style="background-color:#B87F2A">Update</th>
+                <th style="background-color:#B87F2A">List/Unlist</th>
+                
+                
+            </tr>
+        </thead>
+        <tbody>
+            <% if(coupondata.length>0){
+        
+
+                for(let i=0;i<coupondata.length;i++){
+                    %>
+            <tr style="background-color:#F3D6B7">
+                <td><a href="" style="text-decoration:none; color:black"><%=i+1%></a></td>
+                <td><a href="" style="text-decoration:none; color:black"><%=coupondata[i].couponCode%></a></td>
+                <td><a href="" style="text-decoration:none; color:black"><%=coupondata[i].couponName%></a></td>
+                 <td><a href="" style="text-decoration:none; color:black"><%=coupondata[i].discount%></a></td>
+                <% let date=coupondata[i].startingDate%>
+                <% const stdate=new Date(date)%>
+                <% const startingDate=stdate.toLocaleDateString(); %>
+                
+
+                 <td><a href="" style="text-decoration:none; color:black"><%=startingDate %></a></td>
+
+                 <% let exdate=coupondata[i].expiryDate%>
+                <% const expdate=new Date(exdate)%>
+                <% const expiryDate=expdate.toLocaleDateString(); %>
+                 <td><a href="" style="text-decoration:none; color:black"><%=expiryDate %></a></td>
+                 <td><a href="" style="text-decoration:none; color:black"><%=coupondata[i].minAmount%></a></td>
+
+                 <td>
+                    <button type="submit">
+                        <a href="/adminloginpage/Dashboard/coupon/editcoupon/<%=coupondata[i]._id%>" style="text-decoration:none">Edit</a>
+                    </button>
+                </td>
+                <td>
+                <button type="submit">
+                    <a href="#" style="text-decoration:none">Delete</a>
+                </button>
+                </td>
+
+            </tr>
+            <%
+            
+        }
+    }else{
+        %>
+
+        <td colspan="5">Products not found</td>
+        <%
+    }
+    %>
+    <button><a href="/adminloginpage/Dashboard/coupon/addcoupon">Add Coupon</a></button>
+
+    
+</body>
+</html>

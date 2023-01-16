@@ -1,0 +1,234 @@
+
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  
+ <style>
+     
+  
+    /* these styles are for the demo, but are not required for the plugin */
+    .zoom {
+      display:inline-block;
+      position: relative;
+    }
+    
+    /* magnifying glass icon */
+    .zoom:after {
+      content:'';
+      display:block; 
+      width:33px; 
+      height:33px; 
+      position:absolute; 
+      top:0;
+      right:0;
+      background:url(icon.png);
+    }
+
+    .zoom img {
+      display: block;
+    }
+
+    .zoom img::selection { background-color: transparent; }
+
+    
+  </style>
+
+
+
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+<script src="/public/javascripts/jquery.zoom.js"></script>
+<script>
+  $(document).ready(function(){
+    $('#ex1').zoom();
+    
+  });
+</script>
+
+<%-include('../layout/userHeader')%>
+
+
+
+
+<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/public/stylesheets/user/reset.css">
+<link rel="stylesheet" type="text/css" href="/public/stylesheets/user/jquery-picZoomer.css">
+
+    <link rel='stylesheet' href='/public/stylesheets/user/productDetails.css'/>
+
+
+  
+    
+
+    
+   
+    
+   
+
+  
+
+    
+
+    
+    
+    <div class = "card-wrappernew">
+      
+      <div class = "card">
+        <!-- card left -->
+        <div class = "product-imgs">
+          <div class = "img-display">
+            <div class = "img-showcase">
+              
+              <div class='zoom' id='ex1'>
+              <img class="image" src = "/public/images/adminimage/<%=productdata.image[0].filename%>" alt = "bridal image" id="myimage">
+              </div>
+            
+           
+
+              
+
+            </div>
+          </div>
+          
+          <div class = "img-select">
+            <div class = "img-item">
+              
+              <a href = "#" data-id = "1">
+                <img class="image" src = "/public/images/adminimage/<%=productdata.image[0].filename%>" alt = "bridal image">
+              </a>
+            
+            </div>
+            <div class = "img-item">
+              <a href = "#" data-id = "2">
+                <img class="image" src = "/public/images/adminimage/<%=productdata.image[1].filename%>" alt = "bridal image">
+              </a>
+            </div>
+            <div class = "img-item">
+              <a href = "#" data-id = "3">
+                <img class="image" src = "/public/images/adminimage/<%=productdata.image[2].filename%>" alt = "bridal image">
+              </a>
+            </div>
+            <div class = "img-item">
+              <a href = "#" data-id = "4">
+                <img class="image" src = "/public/images/adminimage/<%=productdata.image[3].filename%>" alt = "bridal image">
+              </a>
+            </div>
+            
+           
+          </div>
+        </div>
+        <!-- card right -->
+        <div class = "product-content">
+          <h2 class = "product-title"><%=productdata.item_name%></h2>
+         
+          <div class = "product-rating">
+            <i class = "fas fa-star"></i>
+            <i class = "fas fa-star"></i>
+            <i class = "fas fa-star"></i>
+            <i class = "fas fa-star"></i>
+            <i class = "fas fa-star-half-alt"></i>
+            <span>4.7(21)</span>
+          </div>
+
+          <div class = "product-price">
+            <p class = "last-price">MRP: <span> &#8377 <%=productdata.mrp%></span></p>
+            <p class = "new-price">Price: <span> &#8377 <%=productdata.price%></span></p>
+            <p style="color: green;" class = "offer">You save &#8377 <%=productdata.mrp-productdata.price%> (<%=Math.round((productdata.mrp-productdata.price)*100/productdata.mrp)%>%)</p>
+
+          </div>
+
+          <div class = "product-detail">
+            <h2>about this item: </h2>
+            <p><%=productdata.product_description%></p>
+            <ul>
+             
+              <li>Available: <span>in stock</span></li>
+              <li>Category: <span>Bridal Sets</span></li>
+              <li>Shipping Area: <span>All over the world</span></li>
+              <li>Shipping Fee: <span>Free</span></li>
+            </ul>
+          </div>
+
+          <div class = "purchase-info">
+            <form action="/categories/selectproduct/addtocart?id=<%=productdata._id%>" method="post">
+                        <p>Quantity</p><span>
+              <input type = "number" min = "0" value = "1" name="quantity" id="quantity">
+            </span>
+            
+             
+              
+          
+              <input type = "submit" class = "btn" role="button" onclick="cart()" value="Add to Cart" style="width: 25%;" >
+             <a href="/categories/selectproduct/addtowishlist?id=<%=productdata._id%>"><i style="padding-left: 20px;color: red;width: 20px;height: 30px;" class="fa-sharp fa-solid fa-heart"></i></a>
+              
+  
+            </form>
+            </div>
+
+          
+        </div>
+      </div>
+
+    </div>
+
+
+    <div>
+        <br><br><br>
+        <h2>Similar Products</h2>
+    </div>
+
+
+    <div>
+        
+    </div>
+
+   
+
+    <script>
+      let popup=document.getElementById("popup")
+      function openPopup(){
+         popup.classList.add("open-popup");
+      }
+      
+      function closePopup(){
+         popup.classList.remove("open-popup");
+      }
+       </script> 
+    <script src="script.js"></script>
+    <script>
+      var mainImg=document.getElementById('myimage');
+      var smallImg=document.getElementsByClassName('img-item')
+
+      smallImg[0].onclick=function(){
+        mainImg.src="/public/images/adminimage/<%=productdata.image[0].filename%>"
+      }
+      smallImg[1].onclick=function(){
+        mainImg.src="/public/images/adminimage/<%=productdata.image[1].filename%>"
+      }
+      smallImg[2].onclick=function(){
+        mainImg.src="/public/images/adminimage/<%=productdata.image[2].filename%>"
+      }
+      smallImg[3].onclick=function(){
+        mainImg.src="/public/images/adminimage/<%=productdata.image[3].filename%>"
+      }
+
+    </script>
+
+
+   
+<script>
+  function cart(){
+  Swal.fire({
+            title: "Added to cart!",
+            icon: "success",
+            confirmButtonText: "continue",
+          }).then(function () {
+           
+          });
+        }
+ </script>
+
+
+
+
+
+    <%-include('../layout/userFooter')%>
+  

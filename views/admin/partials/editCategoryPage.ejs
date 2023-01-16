@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>this is edit category page</h1>
+<form action="/adminloginpage/Dashboard/categories/editcategory/saveEditcategory/<%=categorydata._id%>" method="POST" class="form-horizontal">
+    <fieldset>
+    
+    <!-- Select Basic -->
+   
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="groupName">PRODUCT GROUP</label>
+        <div class="col-md-4">
+          <select id="groupName"class="form-control" name="groupName" required>
+            <label for="one">
+              <option value="" disable selected hidden>--SELECT GROUP--</option>
+            </label>
+            <% if(group.length>0){ 
+                for(let i=0;i<group.length;i++){
+                    %>
+            <label for="two">
+                
+                    <option value="<%=group[i].groupName%>"><%=group[i].groupName%></option>
+
+                  </label>
+               
+            </label>
+            
+            <% }
+           } %>
+           
+           
+          </select>
+          
+          
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="categoryName">CATEGORY NAME</label>  
+        <div class="col-md-4">
+        <input id="categoryName" name="categoryName" value="<%=categorydata.categoryName%>" class="form-control input-md" required="" type="text">
+          
+        </div>
+      </div>
+
+    <!-- Button -->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="singlebutton"></label>
+    <div class="col-md-4">
+       
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+    </div>
+    
+  
+    
+    </fieldset>
+    </form>
+
+    
+
+</body>
+</html>

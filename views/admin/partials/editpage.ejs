@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<title>Document</title>
+	<link rel='stylesheet' href='/public/stylesheets/userstyle.css' />
+</head>
+
+<body>
+	<section class="sec">
+		<div class="container py-5 h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-12">
+					<div class="card card-registration card-registration-2" style="border-radius: 15px;">
+						<div class="card-body pt-10px">
+							<div class="row g-0">
+								<div class="col-lg-6">
+									<div class="p-5">
+										<form action="/adminloginpage/Dashboard/customers/updateUser/<%=userCollection._id%>" method="POST">
+											<h3 class="fw-normal mb-5" style="color:#8A5B42;">General Infomation</h3>
+
+
+
+											<div class="row">
+												<div class="col-md-6 mb-4 pb-2">
+
+
+													<div class="form-outline">
+														<input type="text" id="first_name"
+															class="form-control form-control-lg" name="first_name" value="<%- userCollection.first_name %>" />
+														<label class="form-label" for="form3Examplev2">First
+															name</label>
+													</div>
+
+												</div>
+												<div class="col-md-6 mb-4 pb-2">
+
+													<div class="form-outline">
+														<input type="text" id="last_name"
+															class="form-control form-control-lg" name="last_name" value="<%- userCollection.last_name %>"/>
+														<label class="form-label" for="form3Examplev3">Last name</label>
+													</div>
+
+												</div>
+											</div>
+
+
+											<div class="d-md-flex justify-content-start align-items-center mb-4 py-2">
+
+												<h6 class="mb-0 me-4">Gender: </h6>
+
+												<div class="form-check form-check-inline mb-0 me-4">
+													<input class="form-check-input" type="radio"
+														name="inlineRadioOptions" id="femaleGender" value="option1" />
+													<label class="form-check-label" for="femaleGender">Female</label>
+												</div>
+
+												<div class="form-check form-check-inline mb-0 me-4">
+													<input class="form-check-input" type="radio"
+														name="inlineRadioOptions" id="maleGender" value="option2" />
+													<label class="form-check-label" for="maleGender">Male</label>
+												</div>
+
+												<div class="form-check form-check-inline mb-0">
+													<input class="form-check-input" type="radio"
+														name="inlineRadioOptions" id="otherGender" value="option3" />
+													<label class="form-check-label" for="otherGender">Other</label>
+												</div>
+
+											</div>
+
+
+
+
+
+											<div class="row">
+												<div class="col-md-6 mb-4 pb-2 mb-md-0 pb-md-0">
+
+
+													<div class="form-outline form-white">
+														<input type="text" id="phonenumber"
+															class="form-control form-control-lg" name="phonenumber" value="<%- userCollection.phonenumber %>"/>
+														<label class="form-label" for="form3Examplea8">Phone
+															Number</label>
+													</div>
+
+													<br>
+
+													<div class="form-outline form-white">
+														<input type="text" id="alternative_phonenumber"
+															class="form-control form-control-lg"
+															name="alternative_phonenumber" value="<%- userCollection.alternative_phonenumber %>"/>
+														<label class="form-label" for="form3Examplea8">Alternative Phone
+															Number</label>
+													</div>
+
+													<br>
+													<div class="form-outline form-white">
+														<input type="password" name="password" id="password"
+															class="form-control form-control-lg" value="<%- userCollection.password %>" />
+														<label class="form-label" for="form3Examplea8">Password</label>
+
+													</div>
+													<br>
+													<div class="form-outline form-white">
+														<input type="password" name="confirmpassword"
+															id="confirmpassword" class="form-control form-control-lg" value="<%- userCollection.confirmpassword%>" />
+														<label class="form-label" for="form3Examplea8">Confirm
+															Password</label>
+															<p>
+																<%=locals.check%>
+															</p>
+
+													</div>
+
+
+												</div>
+
+											</div>
+									</div>
+								</div>
+								<div class="col-lg-6 bg-indigo text-white">
+									<div class="p-5">
+										<h3 class="fw-normal mb-5">Contact Details</h3>
+
+										<div class="mb-4 pb-2">
+											<div class="form-outline form-white">
+												<input type="text" id="houseno" class="form-control form-control-lg"
+													name="houseno" value="<%- userCollection.houseno %>"/>
+												<label class="form-label" for="form3Examplea2">House No./
+													Building</label>
+											</div>
+										</div>
+
+										<div class="mb-4 pb-2">
+											<div class="form-outline form-white">
+												<input type="text" id="area" class="form-control form-control-lg"
+													name="area" value="<%- userCollection.area %>" />
+												<label class="form-label" for="form3Examplea3">Area/Road</label>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-5 mb-4 pb-2">
+
+												<div class="form-outline form-white">
+													<input type="text" id="pincode" class="form-control form-control-lg"
+														name="pincode" value="<%- userCollection.pincode%>"/>
+													<label class="form-label" for="form3Examplea4">Pin Code</label>
+												</div>
+
+											</div>
+											<div class="col-md-7 mb-4 pb-2">
+
+												<div class="form-outline form-white">
+													<input type="text" id="place" class="form-control form-control-lg"
+														name="place" value="<%- userCollection.place %>"/>
+													<label class="form-label" for="form3Examplea5">Place</label>
+												</div>
+
+											</div>
+										</div>
+
+										<div class="mb-4 pb-2">
+											<div class="form-outline form-white">
+												<input type="text" id="state" class="form-control form-control-lg"
+													name="state" value="<%- userCollection.state %>" />
+												<label class="form-label" for="form3Examplea6">State</label>
+											</div>
+										</div>
+
+										<div class="mb-4 pb-2">
+											<div class="form-outline form-white">
+												<input type="text" id="country" class="form-control form-control-lg"
+													name="country" value="<%- userCollection.country %>"/>
+												<label class="form-label" for="form3Examplea6">Country</label>
+											</div>
+										</div>
+
+
+
+										<div class="mb-4">
+											<div class="form-outline form-white">
+												<input type="text" id="email" class="form-control form-control-lg"
+													name="email" value="<%- userCollection.email %>" />
+												<label class="form-label" for="form3Examplea9">Your Email</label>
+											</div>
+										</div>
+
+										<div class="form-check d-flex justify-content-start mb-4 pb-3">
+											<input class="form-check-input me-3" type="checkbox" value=""
+												id="form2Example3c" />
+											<label class="form-check-label text-white" for="form2Example3">
+												I do accept the <a href="#!" class="text-white"><u>Terms and
+														Conditions</u></a> of your
+												site.
+											</label>
+										</div>
+
+										<button type="submit" class="btn btn-light btn-lg"
+											data-mdb-ripple-color="dark">Register</button>
+
+										</form>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>

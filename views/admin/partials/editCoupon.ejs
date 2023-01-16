@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+     <!-- Adding css connection -->
+     <link
+     rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    
+        <!-- Adding jquery connection -->
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <!-- Adding datatable connection -->
+        <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+        <!-- Initialising datatable connection -->
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+</head>
+
+<%-include('../layout/adminHeader')%>
+<body>
+    
+
+    <div class="container">
+
+            
+        <!-- Jumbotron -->
+        <div class="container col-md-9 ms-sm-auto col-lg-10 px-md-4" style="margin-top: -140px;" >
+            <div class="row g-0 align-items-center justify-content-center">
+                <div class="col-lg-6 mb-5 mb-lg-0 mt-5 pt-5">
+                    <div class="card cascading-right"
+                        style="background: hsla(0, 0%, 100%, 0.55); backdrop-filter: blur(30px); ">
+                        <div class="card-body p-5 shadow-5 text-center">
+                            <h2 class="fw-bold mb-5">Add Coupon</h2>
+                            <form action="" method="POST">
+    
+                                
+                    <div class="form-group pass_show"> 
+                        <label class="form-label" for="form3Example1">Coupon Name</label>
+                        <input name="couponName" type="text" value="<%=coupondata.couponName%>" class="form-control" > 
+                    </div> 
+                    <br>
+    
+    
+                    
+                    <div class="form-group pass_show">
+                        <label class="form-label" for="form3Example1">Coupon Code</label> 
+                        <input name="couponCode" type="text" value="<%=coupondata.couponCode%>" class="form-control"> 
+                    </div> 
+                    <br>
+    
+                              
+                    <div class="form-group pass_show"> 
+                        <label class="form-label" for="form3Example1">Discount</label>
+                        <input name="discount" type="text" value="<%=coupondata.discount%>" class="form-control"> 
+                    </div> 
+                    <br>
+                    <div class="form-group pass_show"> 
+                        <label class="form-label" for="form3Example1">Starting Date</label>
+                        <% let date=coupondata.startingDate%>
+                        <% const stdate=new Date(date)%>
+                        <% const startingDate=stdate.toLocaleDateString(); %>
+                        <input name="startingDate" type="text" value="<%=startingDate%>" class="form-control"> 
+                    </div>
+                    <br>
+                    <div class="form-group pass_show"> 
+                        <label class="form-label" for="form3Example1">Expiry Date</label>
+                        <% let exdate=coupondata.expiryDate%>
+                        <% const expdate=new Date(exdate)%>
+                        <% const expiryDate=expdate.toLocaleDateString(); %>
+                        <input name="expiryDate" type="text" value="<%=expiryDate%>" class="form-control"> 
+                    </div>
+                    <br>
+                    <div class="form-group pass_show"> 
+                        <label class="form-label" for="form3Example1">Minimum Amount</label>
+                        <input name="minAmount" type="text" value="<%=coupondata.minAmount%>" class="form-control"> 
+                    </div> 
+    
+                    <p style="color: red;">
+                        
+                    </p>
+                                
+    
+                                
+                               
+    
+                                <!-- Submit button -->
+                                <div class="form-outline mt-3">
+                                    <button type="submit" class="btn btn-primary btn-block mb-4"> Update</button>
+                                </div>
+    
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+   
+    
+ 
+
+    

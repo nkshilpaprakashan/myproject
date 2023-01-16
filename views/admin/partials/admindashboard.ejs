@@ -1,0 +1,168 @@
+<%-include('../layout/adminHeader')%>
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    background-color: #5d5d02;
+}
+
+.wrapper{
+    width: 600px;
+    height: 350px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding: 82px 36px 0 15px;
+    overflow-y: hidden;
+    border-left: 2px solid #bbb30b;
+    border-bottom: 2px solid #bbb30b;
+    box-shadow: -3px 3px 5px #bbb30b;
+    background-color: #1c1c00;
+}
+
+
+.items{
+    width: 20px;
+    height: 80%;
+    background-color: red;
+    transform: skewY(9deg);
+    position: relative;
+    animation:upscale 1.2s linear;
+
+}
+
+@keyframes upscale{
+    0%{
+        height: 0;
+    }
+}
+
+.items::before{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height:100%;
+    top: -3px;
+    right: -100%;
+    background-color: brown;
+    transform: skewY(-18deg);
+    overflow: hidden;
+}
+
+.items::after{
+    content: "";
+    position: absolute;
+    width: 36px;
+    height: 25px;
+    transform: rotateX(99deg) rotateY(-7deg) rotateZ(50deg);
+    background-color: brown;
+    top: -15px;
+    left:2px
+}
+
+
+
+.item1{
+height:25% ;
+}
+.item2{
+    height: 50%;
+    }
+    .item3{
+        height:60% ;
+        }
+        .item4{
+            height:70% ;
+            }
+            .item5{
+                height:85% ;
+                }
+                .item6{
+                    height: 99%;
+                    }
+
+.items p{
+    position: absolute;
+    top:-30px;
+    transform: skewY(-9deg);
+    font-size:18px ;
+    left: 2px;
+    color: #fff;
+}
+    </style>
+<div class="col">
+    <h1 class="h2">Dashboard</h1>
+    
+
+
+    <div class="row my-4">
+        <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-0">
+            <div class="card">
+                <h5 class="card-header">Customers</h5>
+                <div class="card-body">
+                    <h5 class="card-title"><%=fulldata.length%></h5>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
+            <div class="card">
+                <h5 class="card-header">Orders</h5>
+                <div class="card-body">
+                    <h5 class="card-title"><%=orderdata.length%></h5>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
+            <div class="card">
+                <h5 class="card-header">Products</h5>
+                <div class="card-body">
+                    <h5 class="card-title"><%=productdata.length%></h5>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
+            <div class="card">
+                <h5 class="card-header">Categories</h5>
+                <div class="card-body">
+                    <h5 class="card-title"><%=categorydata.length%></h5>
+
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+
+  <div class="wrapper">
+    <div class="items item1"><p><span class="number">25</span>%</p></div>
+     <div class="items item2"><p><span class="number">50</span>%</p></div>
+     <div class="items item3"><p><span class="number">60</span>%</p></div>
+     <div class="items item4"><p><span class="number">70</span>%</p></div>
+     <div class="items item5"><p><span class="number">85</span>%</p></div>
+      <div class="items item6"><p><span class="number">99</span>%</p></div>
+                        
+</div>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js" integrity="sha512-CEiA+78TpP9KAIPzqBvxUv8hy41jyI3f2uHi7DGp/Y/Ka973qgSdybNegWFciqh6GrN2UePx2KkflnQUbUhNIA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js" integrity="sha512-d8F1J2kyiRowBB/8/pAWsqUl0wSEOkG5KATkVV4slfblq9VRQ6MyDZVxWl2tWd+mPhuCbpTB4M7uU/x9FlgQ9Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+$(document).ready(function(){
+    $('.number').counterUp({
+        time:800
+    })
+})
+</script>
+  
+<%-include('../layout/adminFooter')%>
+ 

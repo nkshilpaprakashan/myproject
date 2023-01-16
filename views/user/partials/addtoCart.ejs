@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/f9c72047c7.js" crossorigin="anonymous"></script> 
+    <link rel='stylesheet' href='/public/stylesheets/user/addtoCart.css'/>
+    <title>Document</title>
+</head>
+<%-include('../layout/userHeader')%>
+<body>
+    <section class="h-100 h-custom" style="background-color: #d2c9ff;">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
+              <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                <div class="card-body p-0">
+                  <div class="row g-0">
+                    <div class="col-lg-8">
+                      <div class="p-5">
+                        <div class="d-flex justify-content-between align-items-center mb-5">
+                          <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+                          <h6 class="mb-0 text-muted"><%=cartdata.length%> Items</h6>
+                        </div>
+
+                        <% if(cartdata.length>0){
+        
+ var totamt=0; 
+ var distot=0;
+ distot=distot+cartdata[0].discount;
+                          for(let i=0;i<cartdata.length;i++){
+                            totamt=totamt+cartdata[i].amount;
+                            
+                              %>
+      
+                        <hr class="my-4">
+      
+                        <div class="row mb-4 d-flex justify-content-between align-items-center">
+                          <div class="col-md-2 col-lg-2 col-xl-2">
+                            <img
+                              src="/public/images/adminimage/<%=cartdata[i].productinfo.image[0].filename%>"
+                              class="img-fluid rounded-3" alt="">
+                          </div>
+                          <div class="col-md-3 col-lg-3 col-xl-3">
+                            <h6 class="text-muted"><%=cartdata[i].productinfo.categoryName%></h6>
+                            <h6 class="text-black mb-0"><%=cartdata[i].productinfo.item_name%></h6>
+                          </div>
+                          <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                            <button><a href="/categories/selectproduct/addtocart/cartQtyMinus/<%=cartdata[i]._id%>" class="btn btn-link px-2" <% if(cartdata[i].quantity==1){ %> style="pointer-events:none;" <% } %>
+                              onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                              <i class="fas fa-minus"></i></a>
+                            </button>
+      
+                            <input id="form1" min="0" name="quantity" style="width: 40px;" value=<%=cartdata[i].quantity%> type="number"
+                              class="form-control form-control-sm" />
+      
+                            <button> <a href="/categories/selectproduct/addtocart/cartQtyPlus/<%=cartdata[i]._id%>" class="btn btn-link px-2" 
+                              onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                              <i class="fas fa-plus"></i></a>
+                            </button>
+                          </div>
+                          <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                            <h6 class="mb-0"><span>&#8377;</span> <%=cartdata[i].productinfo.price%></h6>
+                          </div>
+                          
+                          <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                            <a href="/categories/selectproduct/addtocart/removeFromCart/<%=cartdata[i]._id%>" class="text-muted"><i class="fas fa-trash"></i></a>
+                          </div>
+                        </div>
+ 
+                        <%
+                     
+                      }
+                      }else{
+                      %>
+          
+                          <td colspan="5">Products not found</td>
+                      <%
+                      }
+                      %>
+      
+                        <hr class="my-4">
+      
+                       
+      
+                       
+      
+                        <div class="pt-5">
+                          <h6 class="mb-0"><a href="/" class="text-body"><i
+                                class="fas fa-long-arrow-alt-left me-2"></i>Back to shopping</a></h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 bg-grey">
+                      <div class="p-5">
+                        <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                        <hr class="my-4">
+      
+                        <div class="d-flex justify-content-between mb-4">
+                          <h5 class="text-uppercase"><%=cartdata.length%> Items</h5>
+                         <h5><span>&#8377;</span><%=totamt%></h5>
+                        
+                        </div>
+      
+                      
+      
+                        
+      
+      
+                        <div class="mb-5">
+                          <div class="form-outline">
+                            <label class="form-label" for="form3Examplea2">Have any Coupon?</label>
+                            <input type="text" placeholder="COUPON CODE" id="couponcode" name="couponcode" class="form-control form-control-lg" />
+                           <br>
+                           <p style="color: red;">
+                            <%=locals.check4%>
+                        </p>
+                           <p style="color: red;">
+                            <%=locals.check3%>
+                        </p>
+                           <p style="color: red;">
+                            <%=locals.check2%>
+                        </p>
+                           <p style="color: red;">
+                            <%=locals.check%>
+                        </p>
+                            <a href="" onclick="this.href='/applycoupon/couponcode?couponcode='+document.getElementById('couponcode').value"><button type="submit" class="d-flex justify-content-between mb-4">Apply Coupon</button></a>
+                          
+                            <label style="color:rgb(25, 90, 12)" for="form3Examplea2">Wanna try your luck?</label>
+                            <a href="/wheelspin"> <img src="/public/images/userimage/spinner.png" height="50px width=50px"></a>                    
+                          </p>
+                          <p style="color: red;">
+                           <%=locals.spinmsg%>
+                       </p>
+
+                           
+
+          
+                            <div class="d-flex justify-content-between mb-5"> 
+                            <h5  class="text-uppercase">Discount</h5>
+                             <h5 id="disamt"><span>&#8377;</span><%=distot%></h5>
+                            </div>
+                          </div>
+                        </div>
+      
+                        <hr class="my-4">
+      
+                        <div class="d-flex justify-content-between mb-5">
+                          <h5  class="text-uppercase">Total price</h5>
+                          <h5 id="totvalue"><%=totamt%></h5>
+                          <!-- <h5 id="totvalue"><span>&#8377;</span><%=totamt%></h5> -->
+                        </div>
+                        <a href="/categories/selectproduct/addtocart/makepayment">
+                        <button type="button" class="btn btn-dark btn-block btn-lg"
+                          data-mdb-ripple-color="dark">Make Payment</button></a>
+      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+         
+
+          <script>
+           
+            const element = document.getElementById("applycoupon");
+            element.addEventListener("click", myFun);
+            
+            function myFun() {
+            
+              if(document.getElementById("couponcode").value=="NEW2411")
+              {
+                 document.getElementById("disamt").innerHTML =100;
+                
+                 var vdisamt=parseInt(document.getElementById("disamt").textContent);
+                            
+                 var vtot=parseInt(document.getElementById("totvalue").textContent);
+             
+                document.getElementById("totvalue").innerHTML =vtot-vdisamt;
+              
+            }
+              else{
+                alert("Invalid Code")
+              }
+            }
+            </script>
+
+
+          
+
+ <%-include('../layout/userFooter')%>

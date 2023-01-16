@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <!------ Include the above in your HEAD tag ---------->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>Edit items</h1>
+
+        <div style="width:98%">
+
+            <form action="/adminloginpage/Dashboard/products/editproduct/saveEditproduct" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <fieldset>
+
+                    <!-- Form Name -->
+                    <legend>PRODUCTS</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="item_code">ITEM CODE</label>
+                        <div class="col-sm-4">
+                            <input id="item_code" name="item_code" value="<%=productdata.item_code%>" placeholder="ITEM CODE" class="form-control input-sm" required="" type="text">
+
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="item_name">PRODUCT NAME</label>
+                        <div class="col-sm-4">
+                            <input id="item_name" name="item_name" value="<%=productdata.item_name%>" placeholder="ITEM NAME" class="form-control input-sm" required="" type="text">
+
+                        </div>
+                    </div>
+
+                    <!-- Textarea -->
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="product_description">PRODUCT DESCRIPTION</label>
+                        <div class="col-sm-4">
+                            <textarea class="form-control" id="product_description" name="product_description" value="<%=productdata.product_description%>" placeholder="PRODUCT DESCRIPTION"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Select Basic
+                                                              <div class="form-group">
+                                                                  <label class="col-sm-4 control-label" for="groupName">PRODUCT GROUP</label>
+                                                                  <div class="col-sm-4">
+                                                                    <select id="groupName" name="groupName" class="form-control">
+                                                                    </select>
+                                                                  </div>
+                                                                </div> -->
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="groupName">PRODUCT GROUP</label>
+                        <div class="col-sm-4">
+                            <select id="groupName" class="form-control" name="groupName" required>
+                                <label for="one">
+                                    <option value="" disable selected hidden>--SELECT GROUP--</option>
+                                </label>
+                                <% if(group.length>0){ 
+              for(let i=0;i<group.length;i++){
+                  %>
+                                    <label for="two">
+
+                                        <option value="<%=group[i].groupName%>"><%=group[i].groupName%></option>
+
+                                    </label>
+
+                                </label>
+
+                            <% }
+         } %>
+
+
+                        </select>
+                    </div>
+                </label>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label" for="categoryName">CATEGORY NAME</label>
+                <div class="col-sm-4">
+                    <select id="categoryName" class="form-control" name="categoryName" required>
+                        <label for="one">
+                            <option value="" disable selected hidden>--SELECT CATEGORY--</option>
+                        </label>
+                        <% if(category.length>0){ 
+              for(let i=0;i<category.length;i++){
+                  %>
+                            <label for="two">
+
+                                <option value="<%=category[i].categoryName%>"><%=category[i].categoryName%></option>
+
+                            </label>
+
+                        </label>
+
+                    <% }
+         } %>
+
+
+                </select>
+            </div>
+        </label>
+            
+    </body>
+
+</html></div><!-- Text input--><div class="form-group">
+<label class="col-sm-4 control-label" for="mrp">PRODUCT SIZE</label>
+<div class="col-sm-4">
+    <input id="size" name="size" value="<%=productdata.size%>" placeholder="PRODUCT SIZE" class="form-control input-sm" required="" type="text">
+
+</div></div><!-- Text input--><div class="form-group">
+<label class="col-sm-4 control-label" for="mrp">PRICE</label>
+<div class="col-sm-4">
+    <input id="price" name="price" value="<%=productdata.price%>" placeholder="PRICE" class="form-control input-sm" required="" type="text">
+
+</div></div><!-- Text input--><div class="form-group">
+<label class="col-sm-4 control-label" for="mrp">MRP</label>
+<div class="col-sm-4">
+    <input id="mrp" name="mrp" value="<%=productdata.mrp%>" placeholder="MRP" class="form-control input-sm" required="" type="text">
+
+</div></div><!-- Text input--><div class="form-group">
+<label class="col-sm-4 control-label" for="available_quantity">AVAILABLE QUANTITY</label>
+<div class="col-sm-4">
+    <input id="available_quantity" name="available_quantity" value="<%=productdata.available_quantity%>" placeholder="AVAILABLE QUANTITY" class="form-control input-sm" required="" type="text">
+
+</div></div><!-- Text input--><div class="form-group">
+<label class="col-sm-4 control-label" for="product_unit">PRODUCT UNIT</label>
+<div class="col-sm-4">
+    <input id="product_unit" name="product_unit" value="<%=productdata.product_unit%>" placeholder="PRODUCT UNIT" class="form-control input-sm" required="" type="text">
+
+</div></div><!-- Text input--><div class="form-group">
+<label class="col-sm-4 control-label" for="percentage_discount">OFF PERCENTAGE DISCOUNT</label>
+<div class="col-sm-4">
+    <input id="percentage_discount" name="percentage_discount" value="<%=productdata.percentage_discount%>" placeholder="PERCENTAGE DISCOUNT" class="form-control input-sm" required="" type="text">
+
+</div></div><!-- File Button --><div class="form-group">
+<label class="col-sm-4 control-label" for="filebutton">SELECT PRODUCT IMAGE</label>
+<div class="col-sm-4">
+    <input id="filebutton" name="image" class="input-file" type="file" multiple>
+</div></div><!-- Button --><div class="form-group">
+<label class="col-sm-4 control-label" for="singlebutton"></label>
+<div class="col-sm-4">
+    <button type="submit" id="singlebutton" class="btn btn-primary">Update</button>
+</div></div></fieldset></form></div></body></html>

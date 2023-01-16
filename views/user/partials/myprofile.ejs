@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+     
+
+    <title>Document</title>
+
+</head>
+<%-include('../layout/userHeader')%>
+
+<body>
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+          <div class="row">
+            <div class="col">
+             
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="card mb-4">
+                <div class="card-body text-center">
+                  <img src="/public/images/adminimage/<%=userdata.profileImage%>" alt="avatar" 
+                    class="rounded-circle img-fluid" style="width: 150px;" id="img-preview">
+                    
+<div class="col-sm-4">
+    <!-- <input id="filebutton" name="image" class="input-file" type="file"> -->
+    <input type="file" id="choosefile" name="choosefile" accept="image/*"/>
+    
+</div>
+                  <h5 class="my-3"><%=userdata.first_name%><%=userdata.last_name%></h5>
+                  <p class="text-muted mb-1"><%=userdata.email%></p>
+                  <a href="" onclick="this.href='/myprofile/savechanges?filename='+document.getElementById('choosefile').files.item(0).name"><button  type="submit" class="btn btn-outline-primary ms-1">Save Changes</button></a>
+                  
+                  <!-- document.getElementById('choosefile').files.item(0).name -->
+                  
+                  <div class="d-flex justify-content-center mb-2">
+                   
+                    <a style="margin-top: 10px;" href="/myprofile/logout"><button type="submit" class="btn btn-outline-primary ms-1">Logout</button></a> 
+                  </div>
+                </div>
+              </div>
+             
+            </div>
+            <div class="col-lg-8">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Full Name</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0"><%=userdata.first_name%><%=userdata.last_name%></p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Email</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0"><%=userdata.email%></p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Phone</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0"><%=userdata.phonenumber%></p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Mobile</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0"><%=userdata.alternative_phonenumber%></p>
+                    </div>
+                  </div>
+                  <hr>
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Password</p>
+                    </div>
+                    <div class="col-sm-9">
+                       <a href="/myprofile/changepassword"> <button type="submit" class="btn btn-outline-primary ms-1">Change Password</button></a>
+                    </div>
+                  </div>
+                  <hr>
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Address</p>
+                    </div>
+                    <div class="col-sm-9">
+                     
+                      <p class="text-muted mb-0"> <%=userdata.houseno +","+ userdata.area +", Pin:"+ userdata.pincode%></p>
+                      
+                      
+                      <p class="text-muted mb-0">Place:<%=userdata.place%></p>
+                      <p class="text-muted mb-0">State:<%=userdata.state%></p>
+                    </div>
+                    <br>
+
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                          <!-- <a href="/myprofile/addaddress"><button type="submit" class="btn btn-outline-primary ms-1">Add Address</button></a> -->
+                        </div>
+                        <div class="col-sm-9">
+                          <a href="/myprofile/changeaddress">  <button type="submit" class="btn btn-outline-primary ms-1">Change Address</button></a> 
+                        </div>
+                      </div>
+                    
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+      <script>
+        const chooseFile = document.getElementById("choosefile");
+        const imgPreview = document.getElementById("img-preview");
+        
+        chooseFile.addEventListener("change", function () {
+
+        alert(choosefile.files.filename);
+          getImgData();
+        });
+        
+        function getImgData() {
+          const files = chooseFile.files[0];
+        
+          if (files) {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(files);
+            fileReader.addEventListener("load", function () {
+              imgPreview.style.display = "block";
+              imgPreview.innerHTML = '<img src="' + this.result + '" />';
+              imgPreview.src=this.result
+              alert(this.value);
+            });    
+          }
+        }
+        </script>
+
+        <script>
+          function showname () {
+      var name = document.getElementById('choosefile'); 
+      // alert('Selected file: ' + name.files.item(0).name);
+      alert(document.getElementById('choosefile').files.item(0).name);
+    };
+
+        </script>
+
+</body>
+</html>

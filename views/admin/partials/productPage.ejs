@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+     <!-- Adding css connection -->
+     <link
+     rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    
+        <!-- Adding jquery connection -->
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <!-- Adding datatable connection -->
+        <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+        <!-- Initialising datatable connection -->
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+</head>
+
+<%-include('../layout/adminHeader')%>
+<body>
+    <h1>Product Page</h1>
+   
+    
+    
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th style="background-color:#B87F2A">Sl No.</th>
+                <th style="background-color:#B87F2A">Item Code</th>
+                <th style="background-color:#B87F2A">Item Name</th>
+                <th style="background-color:#B87F2A">Group</th>
+                <th style="background-color:#B87F2A">Category</th>
+                <th style="background-color:#B87F2A">Size</th>
+                <th style="background-color:#B87F2A">Price</th>
+                <th style="background-color:#B87F2A">MRP</th>
+                <th style="background-color:#B87F2A">Stock</th>
+                <th style="background-color:#B87F2A">Unit</th>
+                <th style="background-color:#B87F2A">Offer</th>
+                <th style="background-color:#B87F2A">Image</th>
+                <th style="background-color:#B87F2A">Update</th>
+                <th style="background-color:#B87F2A">List/Unlist</th>
+                
+                
+            </tr>
+        </thead>
+        <tbody>
+            <% if(productdata.length>0){
+        
+
+                for(let i=0;i<productdata.length;i++){
+                    %>
+            <tr style="background-color:#F3D6B7">
+                <td><a href="" style="text-decoration:none; color:black"><%=i+1%></a></td>
+                <td><a href="" style="text-decoration:none; color:black"><%=productdata[i].item_code%></a></td>
+                <td><a href="" style="text-decoration:none; color:black"><%=productdata[i].item_name%></a></td>
+                <td><a href="" style="text-decoration:none; color:black"><%=productdata[i].groupName%></a></td>
+                <td><a href="" style="text-decoration:none; color:black"><%=productdata[i].categoryName%></a></td>
+                <td><a href="" style="text-decoration:none; color:black"><%=productdata[i].size%></a></td>
+                <td><a href="" style="text-decoration:none; color:black"><%=productdata[i].price%></a></td>
+                <td><a href="" style="text-decoration:none; color:black"><%=productdata[i].mrp%></a></td>
+                <td><a href="" style="text-decoration:none; color:black"><%=productdata[i].available_quantity%></a></td>
+                 
+                <td><a href="" style="text-decoration:none; color:black"><%=productdata[i].product_unit%></a></td>
+                <td><a href="" style="text-decoration:none; color:black"><%=productdata[i].percentage_discount%></a></td>
+                 <!-- <td><a href="/edit" style="text-decoration:none; color:black"><%=productdata[i].image%></a></td> -->
+                 
+                <td><img src="/public/images/adminimage/<%=productdata[i].image[0].filename %>" alt="img" width="80px" height="100px"></td>
+
+                 
+
+                <td>
+                    <button type="submit">
+                        <a href="/adminloginpage/Dashboard/products/editproduct?id=<%= productdata[i]._id%>" style="text-decoration:none">Edit</a>
+                    </button>
+                </td>
+                <td>
+                    <% if(productdata[i].unlist===true) {%>
+                        <button type="submit" img src>
+                        <a href="/adminloginpage/Dashboard/products/list/<%= productdata[i]._id%>"  onclick="return confirm('CLICK OK TO UNLIST')">List</a>
+                    </button>
+                       
+                      <%}else{%>
+                        <button type="submit">
+                        <a  href="/adminloginpage/Dashboard/products/unlist/<%= productdata[i]._id%>"  onclick="return confirm('CLICK OK TO LIST')">Unlist</a>
+                       </button>
+                        <%}%>
+                    </td>
+
+            </tr>
+            <%
+            
+        }
+    }else{
+        %>
+
+        <td colspan="5">Products not found</td>
+        <%
+    }
+    %>
+    <button><a href="/adminloginpage/Dashboard/products/addproduct">Add Product</a></button>
+
+    
+</body>
+</html>
