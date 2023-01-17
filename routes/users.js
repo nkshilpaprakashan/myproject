@@ -70,7 +70,7 @@ router.get('/search/:searchtext',userController.productSearch)
 
 router.post('/onlinePaypal',userController.online)
 
-router.get('/success',userController.success)
+router.get('/success/netamt',userController.success)
 
 router.get('/cancel',userController.cancel)
 
@@ -85,5 +85,7 @@ router.get('/categories/selectproduct/addtocart/cartQtyPlus/:id', userController
 router.get('/wheelspin', userController.wheelspin)
 
 router.get("/applywheeldiscount/:discount",userController.applywheeldiscount)
+
+router.get("/cartcount",userController.cartcount)
 
 module.exports=router

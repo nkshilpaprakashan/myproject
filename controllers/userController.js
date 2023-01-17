@@ -887,9 +887,29 @@ async function getWishlist(req, res) {
 // -----
 
 async function online(req, res) {
+    let useremail = req.session.useranything
+   
+    let userdata = await userCollection.findOne({email: useremail})
+   
+    let userId = userdata._id;
+  
+    let cartData = await Cart.find({userId: userId})
+    
+    let totalAmt=0;
+    for (let i = 0; i < cartData.length; i++) {
+        totalAmt = totalAmt + cartData[i].amount
+    }
+console.log(totalAmt)
+    
+
 
     await WriteOrderdata(req.body.paymode, req)
-
+    console.log("---------->"+req.body.totamt);
+ if (req.body.paymode == 'cod')
+ {
+    res.render('./user/partials/paymentsuccess', {sessionData: req.session.useranything});
+return
+ }
     if (req.body.paymode != 'cod') {
 
 
@@ -900,7 +920,7 @@ async function online(req, res) {
                     "payment_method": "paypal"
                 },
                 "redirect_urls": {
-                    "return_url": "http://localhost:3000/success",
+                    "return_url": "http://localhost:3000/success/netamt?netamt="+totalAmt,
                     "cancel_url": "http://localhost:3000/cancel"
                 },
                 "transactions": [
@@ -910,7 +930,7 @@ async function online(req, res) {
                                 {
                                     "name": "Bridal Set",
                                     "sku": "B0001",
-                                    "price": "15.00",
+                                    "price": totalAmt,
                                     "currency": "USD",
                                     "quantity": 1
                                 }
@@ -918,7 +938,7 @@ async function online(req, res) {
                         },
                         "amount": {
                             "currency": "USD",
-                            "total": "15.00"
+                            "total": totalAmt
                         },
                         "description": "This is the payment description."
                     }
@@ -950,138 +970,141 @@ async function online(req, res) {
 }
 
 
+
 // ----
 
 async function success(req, res) {
 
-    const payerId = req.query.PayerID;
-    const paymentId = req.query.paymentId
-    const execute_payment_json = {
-
-        payer_id: payerId,
-
-        transactions: [
-            {
-
-                amount: {
-
-                    currency: "USD",
-                    "total": "15.00"
-
-                }
-
-            }
-        ]
-
-    };
-
-    paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
-
-        if (error) {
-
-            console.log(error.response);
-
-            throw error;
-
-        } else {
-
-            console.log("Get Payment Response");
-            console.log(JSON.stringify(payment));
-
-
-            res.render('./user/partials/paymentsuccess', {sessionData: req.session.useranything});
-
-        }
-
-    });
-
-}
-
-
-async function WriteOrderdata(paymode, req) {
-    console.log("--------pay--------" + paymode)
-    let newOrderNo;
-    const maxOrdno = await Order.aggregate([{
-            $group: {
-                _id: 1,
-                maxno: {
-                    $max: "$orderNo"
-                }
-            }
-        }])
-    if (maxOrdno.length != 0) {
-
-        newOrderNo = maxOrdno[0].maxno + 1;
-    } else {
-        newOrderNo = 1
-    }
-
-
-    let useremail = req.session.useranything
-    console.log("ssspppp" + useremail)
-    let userdata = await userCollection.findOne({email: useremail})
-    console.log("sssooooo" + userdata)
-    let userId = userdata._id;
-    console.log("sss" + userId)
-    let cartData = await Cart.find({userId: userId})
-    console.log("0000000000000000000000000000000000000000000" + cartData.discount)
-    let totalAmt = 0;
-    for (let i = 0; i < cartData.length; i++) {
-        totalAmt = totalAmt + cartData[i].amount
-    }
-
-
-    await Order.create({
-        userId: objectId(userdata._id),
-        orderNo: newOrderNo,
-        orderDate: Date(),
-        paymode: paymode,
-        totalAmount: totalAmt,
-        couponCode: cartData[0].couponcode,
-        discount: cartData[0].discount,
-        products: [
-            {
-
-                productId: cartData[0].productId,
-                quantity: cartData[0].quantity,
-                price: cartData[0].price,
-                amount: cartData[0].amount
-            }
-        ]
-
-    })
-
-
-    for (let i = 1; i < cartData.length; i++) {
-        await Order.updateOne({
-            orderNo: newOrderNo
-        }, {
-            $push: {
-                products: {
-                    $each: [
-                        {
-                            productId: cartData[i].productId,
-                            quantity: cartData[i].quantity,
-                            price: cartData[i].price,
-                            amount: cartData[i].amount
-                        },
-                    ]
-                }
-            }
-        })
-    }
-
-
-    await Cart.deleteMany({userId: userId})
-
-
-}
-
-
-function cancel(req, res) {
-    res.send('cancelled')
-}
-
+    let total=req.query.netamt
+     
+     const payerId = req.query.PayerID;
+     const paymentId = req.query.paymentId
+     const execute_payment_json = {
+ 
+         payer_id: payerId,
+ 
+         transactions: [
+             {
+ 
+                 amount: {
+ 
+                     currency: "USD",
+                     "total": total
+ 
+                 }
+ 
+             }
+         ]
+ 
+     };
+ 
+     paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+ 
+         if (error) {
+ 
+             console.log(error.response);
+ 
+             throw error;
+ 
+         } else {
+ 
+             console.log("Get Payment Response");
+             console.log(JSON.stringify(payment));
+ 
+ 
+             res.render('./user/partials/paymentsuccess', {sessionData: req.session.useranything});
+ 
+         }
+ 
+     });
+ 
+ }
+ 
+ 
+ async function WriteOrderdata(paymode, req) {
+     console.log("--------pay--------" + paymode)
+     let newOrderNo;
+     const maxOrdno = await Order.aggregate([{
+             $group: {
+                 _id: 1,
+                 maxno: {
+                     $max: "$orderNo"
+                 }
+             }
+         }])
+     if (maxOrdno.length != 0) {
+ 
+         newOrderNo = maxOrdno[0].maxno + 1;
+     } else {
+         newOrderNo = 1
+     }
+ 
+ 
+     let useremail = req.session.useranything
+    
+     let userdata = await userCollection.findOne({email: useremail})
+    
+     let userId = userdata._id;
+   
+     let cartData = await Cart.find({userId: userId})
+     
+     let totalAmt = 0;
+     for (let i = 0; i < cartData.length; i++) {
+         totalAmt = totalAmt + cartData[i].amount
+     }
+ 
+ 
+     await Order.create({
+         userId: objectId(userdata._id),
+         orderNo: newOrderNo,
+         orderDate: Date(),
+         paymode: paymode,
+         totalAmount: totalAmt,
+         couponCode: cartData[0].couponcode,
+         discount: cartData[0].discount,
+         products: [
+             {
+ 
+                 productId: cartData[0].productId,
+                 quantity: cartData[0].quantity,
+                 price: cartData[0].price,
+                 amount: cartData[0].amount
+             }
+         ]
+ 
+     })
+ 
+ 
+     for (let i = 1; i < cartData.length; i++) {
+         await Order.updateOne({
+             orderNo: newOrderNo
+         }, {
+             $push: {
+                 products: {
+                     $each: [
+                         {
+                             productId: cartData[i].productId,
+                             quantity: cartData[i].quantity,
+                             price: cartData[i].price,
+                             amount: cartData[i].amount
+                         },
+                     ]
+                 }
+             }
+         })
+     }
+ 
+ 
+     await Cart.deleteMany({userId: userId})
+ 
+ 
+ }
+ 
+ 
+ function cancel(req, res) {
+     res.send('cancelled')
+ }
+ 
 
 // -------------------
 
@@ -1711,6 +1734,15 @@ async function wheelspin(req, res) {
     res.render('./user/partials/wheelspin', {sessionData: req.session.useranything})
 }
 
+async function cartcount(req,res){
+    if(!req.session.useranything){
+        return
+    }
+    const userdata=await userCollection.findOne({email:req.session.useranything})
+    const ccount=await Cart.find({userId:userdata._id})
+    res.send({cartcount:ccount.length})
+}
+
 
 
 
@@ -1754,6 +1786,7 @@ module.exports = {
     applycoupon,
     cartQtyMinus,
     cartQtyPlus,
-    applywheeldiscount
+    applywheeldiscount,
+    cartcount
 
 }
