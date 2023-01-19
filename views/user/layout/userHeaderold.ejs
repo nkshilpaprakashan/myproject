@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://kit.fontawesome.com/f9c72047c7.js" crossorigin="anonymous"></script>
+        <!-- CSS only -->
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+        
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> -->
+        <link rel='stylesheet' href='/public/stylesheets/user/usernavbar.css' />
+       
+       
+
+        
+       
+        <script src="https://kit.fontawesome.com/f9c72047c7.js" crossorigin="anonymous"></script>
+
+        <title>Mermaid Boutique</title>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+        
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   
+        
+        <script>
+            $(document).ready(function () 
+            {
+            $.ajax({
+            url: "/cartcount",
+            method:"get",
+            dataType: 'json',
+            success: function (data) 
+                {         
+                $("#cartcount").html(data.cartcount)
+                },
+                });
+            });
+            </script>
+
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg bg-dark">
+            <div class="container">
+                <div class="w-100 d-flex justify-content-between">
+                    <div>
+                        <i class="fa-solid fa-envelope text-light contact-info"></i>
+                        <a href="" class="navbar-sm-brand text-light text-decoration-none
+                                                                                                                   contact-info">
+                            info@company.com
+                        </a>
+                        <i class="fa-solid fa-phone contact-info text-light"></i>
+                        <a href="" class="navbar-sm-brand text-white text-decoration-none
+                                                                                                                   contact-info">
+                            010-020-8340
+                        </a>
+                    </div>
+                    <div>
+                        <a href="" class="text-white">
+                            <i class="fa-brands fa-facebook me-2"></i>
+                        </a>
+                        <a href="" class="text-white">
+                            <i class="fa-brands fa-instagram me-2"></i>
+                        </a>
+                        <a href="" class="text-white">
+                            <i class="fa-brands fa-linkedin me-2"></i>
+                        </a>
+                        <a href="" class="text-white">
+                            <i class="fa-brands fa-twitter me-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+        <nav class="kkknavbar navbar-expand-lg bg-light">
+                <img src="/" alt="">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                          <a href="/"> <button style="border: none;"><i class="fa-solid fa-house"></i></button></a> 
+                            <a href="/" class="text-decoration-none text-dark" type="submit"  data-toggle="dropdown" aria-expanded="false">
+                                
+                        </li>
+                        
+                    </ul>
+                    
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search" id="search">
+                  <a href="" onclick="this.href='/search/'+document.getElementById('search').value">  <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa-solid fa-magnifying-glass nav-icon"></i></button></a>
+                     
+
+
+                    <div class="position-relative">
+
+                        <% if(sessionData) {%>
+                        <div class="position-absolute rounded-circle user"></div>
+                        <a href="/addtocart" class="text-decoration-none text-dark">
+                           
+                            
+                            <i class="fa-solid fa-cart-arrow-down nav-icon"><span id="cartcount" style="color: red;"></span></i>
+                            
+                        </a>
+
+
+                        
+                        
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                                <i  class="fa-solid fa-user"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li>
+                                    <a class="dropdown-item" href="/myprofile">My Profile</a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="/orderview">Orders</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/wishlist">Wishlist</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/userlogout">Log out</a>
+                                </li>
+                            </ul>
+
+                            <% }else{%>
+                                <button><a href="/userlogin">Login</a></button>
+        
+                                <% } %> 
+                            
+                       
+                    </div>
+
+                    
+                    <div class="position-absolute rounded-circle cart">
+                        
+                    </div>
+                    
+                </div>
+        </nav>
+
+
+        

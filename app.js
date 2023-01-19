@@ -41,3 +41,7 @@ console.log(path.join(__dirname,'./views/layout'))
 app.use('/',userRouter) //enable the user router
 app.use('/',adminRouter)//enable the admin router
 
+app.use('*',(req,res)=>{
+    res.redirect('/errorpage')
+})
+

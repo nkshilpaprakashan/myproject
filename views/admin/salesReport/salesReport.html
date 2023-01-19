@@ -25,9 +25,9 @@
                 {{#each salesData}}
                     <tr>
                       <td class="mx-2">{{ this.first_name }}</td>
-                       
+                     
                         <td class="mx-2">{{ this.orderDate }}</td>
-                        <td class="mx-2">{{ this.amount }} Rs</td>
+                        <td class="mx-2">&#8377;{{ this.amount }}</td>
                         <td class="mx-2">{{ this.status }}</td>
                     </tr>
                 {{/each}}
@@ -35,7 +35,7 @@
                   <td class="mx-2"></td>
                   <td class="mx-2"></td>
                   <td class="mx-2"> Total amount</td>
-                  <td class="mx-2">{{ totalAmount}} Rs</td>
+                  <td class="mx-2">&#8377;{{ totalAmount}}</td>
                   <td class="mx-2"></td>
               </tr>
                

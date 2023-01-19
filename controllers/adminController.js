@@ -495,7 +495,7 @@ async function salesReport(req, res) {
         let order = {
 
             first_name: orderData[i].customerData[0].first_name,
-            amount: orderData[i].amount,
+            amount: orderData[i].totalAmount,
             status: status,
             orderDate: orderData[i].orderDate
         }
@@ -504,7 +504,7 @@ async function salesReport(req, res) {
 
     let totalAmount = 0;
     for (let i = 0; i < orderData.length; i++) {
-        totalAmount = totalAmount + orderData[i].amount
+        totalAmount = totalAmount + orderData[i].totalAmount
     }
 
 
@@ -655,6 +655,68 @@ async function editCoupon(req, res) {
 }
 
 
+
+async function couponList(req, res) {
+
+    if (req.session.admin){
+        await Coupon.findByIdAndUpdate({
+            _id: req.params.id
+        }, {
+            $set: {
+                unlist: false
+            }
+        })
+
+
+        res.redirect('/adminloginpage/Dashboard/coupon');
+
+
+    }
+}
+
+
+
+
+async function couponUnlist(req, res) {
+    if (req.session.admin){
+    
+        await Coupon.updateOne({
+            _id: req.params.id
+        }, {
+            $set: {
+                unlist: true
+            }
+        }).then(() => {
+            res.redirect('/adminloginpage/Dashboard/coupon');
+        });
+    
+}
+
+}
+
+
+
+async function saveeditcoupon(req, res) {
+    
+    
+    await Coupon.updateOne({
+        _id: req.params.id
+    }, {
+        $set: {
+
+            couponCode: req.body.couponCode,
+            couponName: req.body.couponName,
+            discount: req.body.discount,
+            startingDate: req.body.startingDate,
+            expiryDate: req.body.expiryDate,
+            minAmount: req.body.minAmount
+        }
+    })
+
+    res.redirect('/adminloginpage/Dashboard/coupon')
+
+}
+
 module.exports = {
     login,
     adminDashboard,
@@ -687,6 +749,9 @@ module.exports = {
     coupon,
     addCoupon,
     postAddCoupon,
-    editCoupon
+    editCoupon,
+    couponList,
+    couponUnlist,
+    saveeditcoupon
 
 }

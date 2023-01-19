@@ -68,6 +68,14 @@ router.post('/adminloginpage/Dashboard/coupon/addcoupon',adminController.postAdd
 
 router.get('/adminloginpage/Dashboard/coupon/editcoupon/:id',adminController.editCoupon)
 
+router.get('/adminloginpage/Dashboard/coupon/list/:id',adminController.couponList)
+
+router.get('/adminloginpage/Dashboard/coupon/unlist/:id',adminController.couponUnlist)
+
+router.post('/adminloginpage/Dashboard/coupon/unlist/saveEditcoupon/:id',adminController.saveeditcoupon)
+
+
+
 
 
 

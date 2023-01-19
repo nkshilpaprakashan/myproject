@@ -75,10 +75,17 @@
                     </button>
                 </td>
                 <td>
-                <button type="submit">
-                    <a href="#" style="text-decoration:none">Delete</a>
-                </button>
-                </td>
+                    <% if(coupondata[i].unlist===true) {%>
+                        <button type="submit" img src>
+                        <a href="/adminloginpage/Dashboard/coupon/list/<%= coupondata[i]._id%>"  onclick="return confirm('CLICK OK TO DISABLE COUPON')">Enable</a>
+                    </button>
+                       
+                      <%}else{%>
+                        <button type="submit">
+                        <a  href="/adminloginpage/Dashboard/coupon/unlist/<%= coupondata[i]._id%>"  onclick="return confirm('CLICK OK TO ENABLE COUPON')">Disable</a>
+                       </button>
+                        <%}%>
+                    </td>
 
             </tr>
             <%

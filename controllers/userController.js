@@ -42,6 +42,7 @@ function userhome(req, res) {
 
 // get
 function userLogin(req, res) {
+    
     if (req.session.useranything) {
         res.redirect('/')
     } else {
@@ -50,6 +51,9 @@ function userLogin(req, res) {
         req.session.destroy()
     }
 }
+
+
+
 
 // post
 async function homeuserValidation(req, res) {
@@ -83,6 +87,7 @@ async function homeuserValidation(req, res) {
     } catch (error) {
         req.session.validationpassword = true
         res.redirect('/userlogin')
+       
         // res.status(400).send("Invalid login details");
     }
 }
@@ -829,8 +834,10 @@ async function invoiceDownload(req, res) {
         console.log('------------');
         console.log(salesData);
         console.log('------------');
-        const document = {
-            html: html,
+        const document ={ 
+            // page.paperSize = { format: 'A4', orientation: 'portrait', border: '1cm' };
+            html: html,format:'A4', orientation: 'landscape',
+            
             data: {
                 salesData
             },
@@ -1022,7 +1029,7 @@ async function success(req, res) {
  
  
  async function WriteOrderdata(paymode, req) {
-     console.log("--------pay--------" + paymode)
+     
      let newOrderNo;
      const maxOrdno = await Order.aggregate([{
              $group: {
@@ -1074,7 +1081,7 @@ async function success(req, res) {
  
      })
  
- 
+    
      for (let i = 1; i < cartData.length; i++) {
          await Order.updateOne({
              orderNo: newOrderNo
@@ -1092,10 +1099,13 @@ async function success(req, res) {
                  }
              }
          })
+
+        
      }
  
  
      await Cart.deleteMany({userId: userId})
+
  
  
  }
@@ -1134,9 +1144,9 @@ async function onlinePaypal(req, res) {
         let useremail = req.session.useranything
         console.log("ssspppp" + useremail)
         let userdata = await userCollection.findOne({email: useremail})
-        console.log("sssooooo" + userdata)
+        
         let userId = userdata._id;
-        console.log("sss" + userId)
+        
         let cartData = await Cart.find({userId: userId})
         console.log(cartData)
         let totalAmt = 0;
@@ -1198,8 +1208,8 @@ async function onlinePaypal(req, res) {
                     "payment_method": "paypal"
                 },
                 "redirect_urls": {
-                    "return_url": "http://localhost:3000/success",
-                    "cancel_url": "http://localhost:3000/cancel"
+                    "return_url": "http://mermaidboutique.store/success",
+                    "cancel_url": "http://mermaidboutique.store/cancel"
                 },
                 "transactions": [
                     {
@@ -1432,7 +1442,48 @@ if(couponcode==="")
 
         
         if (coupondata) {
-            
+           console.log(coupondata.unlist)
+            if(coupondata.unlist==true){
+                let useremail = req.session.useranything
+    let userdata = await userCollection.findOne({email: useremail})
+    let userId = userdata._id;
+   
+
+
+    let quantity = parseInt(req.body.quantity)
+
+    let productid = req.query.id
+
+    let productdata = await Product.findOne({_id: productid})
+
+    let cartdata = await Cart.aggregate([
+        {
+            $match: {
+                userId: objectId(userdata._id)
+            }
+        }, {
+            $lookup: {
+                from: "products",
+                localField: "productId",
+                foreignField: "_id",
+                as: "productinfo"
+            }
+        }, {
+            $unwind: "$productinfo"
+        }
+
+    ])
+                
+                res.render('./user/partials/addtoCart', {
+                    sessionData: req.session.useranything,
+                    cartdata: cartdata,
+    
+                    productdata: productdata,
+                    userdata: userdata,
+                    quantity: quantity,check5:"This Coupon is currently not available"
+                })
+                return
+            }
 
             let checkcouponused = await Order.findOne({
                 $and: [
@@ -1744,6 +1795,10 @@ async function cartcount(req,res){
 }
 
 
+ function errorpage(req,res){
+   res.render('./user/partials/404page');
+}
+
 
 
 module.exports = {
@@ -1787,6 +1842,7 @@ module.exports = {
     cartQtyMinus,
     cartQtyPlus,
     applywheeldiscount,
-    cartcount
+    cartcount,
+    errorpage
 
 }

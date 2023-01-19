@@ -37,7 +37,7 @@
                         style="background: hsla(0, 0%, 100%, 0.55); backdrop-filter: blur(30px); ">
                         <div class="card-body p-5 shadow-5 text-center">
                             <h2 class="fw-bold mb-5">Add Coupon</h2>
-                            <form action="" method="POST">
+                            <form action="/adminloginpage/Dashboard/coupon/unlist/saveEditcoupon/<%= coupondata._id%>" method="POST">
     
                                 
                     <div class="form-group pass_show"> 
@@ -62,18 +62,14 @@
                     <br>
                     <div class="form-group pass_show"> 
                         <label class="form-label" for="form3Example1">Starting Date</label>
-                        <% let date=coupondata.startingDate%>
-                        <% const stdate=new Date(date)%>
-                        <% const startingDate=stdate.toLocaleDateString(); %>
-                        <input name="startingDate" type="text" value="<%=startingDate%>" class="form-control"> 
+                        
+                        <input name="startingDate" type="date" value="<%=coupondata.startingDate%>" class="form-control"> 
                     </div>
                     <br>
                     <div class="form-group pass_show"> 
                         <label class="form-label" for="form3Example1">Expiry Date</label>
-                        <% let exdate=coupondata.expiryDate%>
-                        <% const expdate=new Date(exdate)%>
-                        <% const expiryDate=expdate.toLocaleDateString(); %>
-                        <input name="expiryDate" type="text" value="<%=expiryDate%>" class="form-control"> 
+                        
+                        <input name="expiryDate" type="date" value="<%=coupondata.expiryDate%>" class="form-control"> 
                     </div>
                     <br>
                     <div class="form-group pass_show"> 

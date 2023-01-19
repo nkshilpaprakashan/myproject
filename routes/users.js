@@ -88,4 +88,6 @@ router.get("/applywheeldiscount/:discount",userController.applywheeldiscount)
 
 router.get("/cartcount",userController.cartcount)
 
+router.get("/errorpage",userController.errorpage)
+
 module.exports=router
