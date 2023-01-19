@@ -30,11 +30,22 @@ async function adminDashboard(req, res) {
         let categorydata = await Category.find()
         let productdata = await Product.find()
         let orderdata = await Order.find()
+        let ordertot=0
+        
+        if(orderdata){
+            
+            for(let i=0;i<orderdata.length;i++){
+                ordertot=ordertot+orderdata[i].totalAmount
+
+            }
+
+        }
+        
         res.render('./admin/partials/admindashboard', {
             fulldata: userdata,
             categorydata: categorydata,
             productdata:productdata,
-            orderdata:orderdata
+            orderdata:orderdata,ordertot
         });
     } else {
         res.redirect('/adminloginpage')
