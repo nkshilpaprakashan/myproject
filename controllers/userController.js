@@ -927,8 +927,8 @@ return
                     "payment_method": "paypal"
                 },
                 "redirect_urls": {
-                    "return_url": "http://mermaidboutique.store?netamt="+totalAmt,
-                    "cancel_url": "http://mermaidboutique.store/cancel"
+                    "return_url": "https://mermaidboutique.store/success/netamt?netamt="+totalAmt,
+                    "cancel_url": "https://mermaidboutique.store/cancel"
                 },
                 "transactions": [
                     {
