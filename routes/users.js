@@ -32,13 +32,15 @@ router.get('/addtocart', userController.getAddtoCart)
 
 router.post('/categories/selectproduct/addtocart', userController.postAddtoCart)
 
-router.get('/categories/selectproduct/addtocart/removeFromCart/:id', userController.removeFromCart)
+router.delete('/categories/selectproduct/addtocart/removeFromCart', userController.removeFromCart)
 
 router.get('/categories/selectproduct/addtocart/makepayment', userController.getMakePayment)
 
 router.get('/categories/selectproduct/addtocart/makepayment/edit',userController.editorder)
 
 router.get('/orderview', userController.getOrderView)
+
+router.get('/orderview/viewdetails/:id', userController.getOrderViewDetails)
 
 router.get('/orders/invoicedownload',userController.invoiceDownload)
 
@@ -89,5 +91,9 @@ router.get("/applywheeldiscount/:discount",userController.applywheeldiscount)
 router.get("/cartcount",userController.cartcount)
 
 router.get("/errorpage",userController.errorpage)
+
+router.get("/orders/cancel",userController.ordercancel)
+
+router.get("/orders/salesreturn",userController.salesreturn)
 
 module.exports=router

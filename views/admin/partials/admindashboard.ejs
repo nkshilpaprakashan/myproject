@@ -1,17 +1,8 @@
 <%-include('../layout/adminHeader')%>
 <style>
-    *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-body{
-    height: 100vh;
-    display: grid;
-    place-items: center;
-    background-color: #5d5d02;
-}
+
+
 
 .wrapper{
     width: 600px;
@@ -108,6 +99,7 @@ height:25% ;
                 <h5 class="card-header">Customers</h5>
                 <div class="card-body">
                     <h5 class="card-title"><%=fulldata.length%></h5>
+                   
 
                 </div>
             </div>
@@ -143,26 +135,54 @@ height:25% ;
   </div>
 
 
-
-  <div class="wrapper">
-    <div class="items item1"><p><span class="number">25</span>%</p></div>
-     <div class="items item2"><p><span class="number">50</span>%</p></div>
-     <div class="items item3"><p><span class="number">60</span>%</p></div>
-     <div class="items item4"><p><span class="number">70</span>%</p></div>
-     <div class="items item5"><p><span class="number">85</span>%</p></div>
-      <div class="items item6"><p><span class="number">99</span>%</p></div>
-                        
+  <div class="row">
+    <!-- <div class="col-xl-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-chart-area me-1"></i>
+                Area Chart Example
+            </div>
+            <div class="card-body"><canvas id="myAreaChart" width="100%" height="50"></canvas></div>
+        </div>
+    </div> -->
+    <div class="col-xl-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-chart-bar me-1"></i>
+               Monthly Sales
+            </div>
+            <!-- <div class="card-body"><canvas id="myBarChart" width="100%" height="50"></canvas></div> -->
+       
+    
+<div class="chart-container" style="position: relative; height:45vh; width:43vw;">
+    <canvas id="barchart"></canvas>
 </div>
+
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-chart-bar me-1"></i>
+                Payment Method
+            </div>
+            
+            <div class="chart-container" style="position: relative; height:45vh; width:43vw;">
+                <canvas id="doughnut"></canvas>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+  
 <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js" integrity="sha512-CEiA+78TpP9KAIPzqBvxUv8hy41jyI3f2uHi7DGp/Y/Ka973qgSdybNegWFciqh6GrN2UePx2KkflnQUbUhNIA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js" integrity="sha512-d8F1J2kyiRowBB/8/pAWsqUl0wSEOkG5KATkVV4slfblq9VRQ6MyDZVxWl2tWd+mPhuCbpTB4M7uU/x9FlgQ9Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-$(document).ready(function(){
-    $('.number').counterUp({
-        time:800
-    })
-})
-</script>
+
+
+
   
 <%-include('../layout/adminFooter')%>
  

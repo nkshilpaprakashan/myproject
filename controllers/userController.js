@@ -22,6 +22,8 @@ const paypal = require('paypal-rest-sdk')
 
 const fs = require('fs')
 
+const moment = require('moment')
+
 const path = require('path')
 const {log} = require('console')
 
@@ -57,7 +59,7 @@ function userLogin(req, res) {
 
 // post
 async function homeuserValidation(req, res) {
-    try {
+    
         const email = req.body.email;
         const password = req.body.password;
 
@@ -84,13 +86,8 @@ async function homeuserValidation(req, res) {
             res.redirect('/userlogin')
             // res.send("password incorrect ");
         }
-    } catch (error) {
-        req.session.validationpassword = true
-        res.redirect('/userlogin')
-       
-        // res.status(400).send("Invalid login details");
-    }
-}
+    } 
+
 
 
 // get
@@ -271,7 +268,9 @@ async function getSelectCategory(req, res) {
     let grpname = req.query.groupname
 
     if (req.query.categoryName == 'ALL') {
-        const productnewdata = await Product.find({groupName: req.query.groupname})
+        const productnewdata = await Product.find( {$and:[{groupName: req.query.groupname},
+             {available_quantity: {$gt:0}
+        }]})
         res.render('./user/partials/userProducts', {
             sessionData: req.session.useranything,
             productdata: productnewdata,
@@ -285,7 +284,10 @@ async function getSelectCategory(req, res) {
                     categoryName: req.query.categoryName
                 }, {
                     groupName: req.query.groupname
+                }, {
+                    available_quantity: {$gt:0}
                 }
+
             ]
         })
         res.render('./user/partials/userProducts', {
@@ -469,12 +471,13 @@ async function postAddtoCart(req, res) {
 
 async function removeFromCart(req, res) {
 
+    const cartid=req.body
 
-    req.session.delete = req.params.id
+    req.session.delete = cartid.cartid
     await Cart.deleteOne({
         _id: objectId(req.session.delete)
     })
-    console.log("shilpashilu")
+    res.json({delete:true})
 
     let useremail = req.session.useranything
     let userdata = await userCollection.findOne({email: useremail})
@@ -498,7 +501,8 @@ async function removeFromCart(req, res) {
     ])
 
     // res.redirect(307,'/categories/selectproduct/addtocart')
-    res.render('./user/partials/addtoCart', {cartdata, sessionData: req.session.useranything})
+    // res.render('./user/partials/addtoCart', {cartdata, sessionData: req.session.useranything})
+    
 }
 
 
@@ -528,9 +532,7 @@ async function getMakePayment(req, res) {
 
         ])
 
-        if(cartdata.discount!=""){
-
-        }
+        
 
 
         res.render('./user/partials/orderplace', {cartdata, userdata, sessionData: req.session.useranything});
@@ -582,7 +584,7 @@ async function getOrderView(req, res) {
         let useremail = req.session.useranything
         let userdata = await userCollection.findOne({email: useremail})
 
-        console.log("userdata::" + userdata);
+        console.log("userdata:" + userdata);
 
         let orderdata = await Order.aggregate([
             {
@@ -596,9 +598,7 @@ async function getOrderView(req, res) {
                     foreignField: "_id",
                     as: "productinfo"
                 }
-            }, {
-                $unwind: "$productinfo"
-            }
+            }, { $sort : { orderNo : -1 } }
 
         ])
 
@@ -624,8 +624,7 @@ async function myProfile(req, res) {
     if (req.session.useranything) {
         let useremail = req.session.useranything
         let userdata = await userCollection.findOne({email: useremail})
-        console.log("shilu:" + useremail)
-        console.log("shilpa:" + userdata)
+       
 
 
         res.render('./user/partials/myprofile', {
@@ -840,6 +839,8 @@ async function invoiceDownload(req, res) {
             
             data: {
                 salesData
+            },options:{
+                format: 'letter'
             },
             path: './public/invoiceDownload/' + filename
         }
@@ -910,7 +911,7 @@ console.log(totalAmt)
     
 
 
-    await WriteOrderdata(req.body.paymode, req)
+     await WriteOrderdata(req.body.paymode, req)
     console.log("---------->"+req.body.totamt);
  if (req.body.paymode == 'cod')
  {
@@ -929,6 +930,9 @@ return
                 "redirect_urls": {
                     "return_url": "https://mermaidboutique.store/success/netamt?netamt="+totalAmt,
                     "cancel_url": "https://mermaidboutique.store/cancel"
+                   
+                    // "return_url": "http://localhost:3000/success/netamt?netamt="+totalAmt,
+                    // "cancel_url": "http://localhost:3000/cancel"
                 },
                 "transactions": [
                     {
@@ -1080,7 +1084,15 @@ async function success(req, res) {
          ]
  
      })
- 
+     await Product.updateOne({
+        _id: cartData[0].productId
+    }, {
+        $inc: {
+            available_quantity: -cartData[0].quantity
+            
+        }
+    })
+    
     
      for (let i = 1; i < cartData.length; i++) {
          await Order.updateOne({
@@ -1100,7 +1112,14 @@ async function success(req, res) {
              }
          })
 
-        
+        //  await Product.updateOne({
+        //     _id: cartData[i].productId
+        // }, {
+        //     $inc: {
+        //         available_quantity: -cartData[i].quantity
+                
+        //     }
+        // })
      }
  
  
@@ -1795,11 +1814,76 @@ async function cartcount(req,res){
 }
 
 
+
+
+
+
+
+async function getOrderViewDetails(req, res) {
+    
+        if (req.session.useranything){
+            const orderdata = await Order.findOne({_id: req.params.id})
+            
+            let userdetails = await userCollection.findOne({ _id: objectId(orderdata.userId)})
+
+            
+        let orderdataproduct = await Order.aggregate([
+            {
+                $match: {
+                    _id: objectId(req.params.id)
+                }
+            }, {
+                $lookup: {
+                    from: "products",
+                    localField: "products.productId",
+                    foreignField: "_id",
+                    as: "productinfo"
+                }
+            }, {
+                $unwind: "$productinfo"
+            }
+
+        ])
+
+        console.log(orderdataproduct)
+                   
+ res.render('./user/partials/orderviewdetails',{orderdata,userdetails,orderdataproduct,sessionData: req.session.useranything});
+        }
+    
+}
+
  function errorpage(req,res){
-   res.render('./user/partials/404page');
+    res.render('./user/partials/404page')
 }
 
 
+async function ordercancel(req,res){
+    if (req.session.useranything) {
+
+        const orderId=req.query.id
+        await Order.updateOne({_id:orderId},{$set:{orderstatus:"Cancel"}})
+       
+        res.redirect('/orderview/viewdetails/'+ orderId)
+   
+}else {
+    res.redirect('/userlogin')
+}}
+
+
+
+
+
+async function salesreturn(req,res){
+    if (req.session.useranything) {
+
+        const orderId=req.query.id
+        await Order.updateOne({_id:orderId},{$set:{orderstatus:"Return Requested"}})
+       
+        res.redirect('/orderview/viewdetails/'+ orderId)
+   
+}else {
+    res.redirect('/userlogin')
+}}
 
 module.exports = {
     userhome,
@@ -1843,6 +1927,9 @@ module.exports = {
     cartQtyPlus,
     applywheeldiscount,
     cartcount,
-    errorpage
+    errorpage,
+    getOrderViewDetails,
+    ordercancel,
+    salesreturn
 
 }

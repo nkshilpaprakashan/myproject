@@ -9,7 +9,7 @@ const orderSchema = new Schema({
         required: true
     },
     orderDate: {
-        type: String,
+        type: Date,
         required: true
     },
     userId: {
@@ -20,9 +20,10 @@ const orderSchema = new Schema({
         type: String,
         required: true
     },
-    status: {
-        type: Boolean,
-        default: false
+    orderstatus: {
+        type: String,
+        default:'Pending'
+        
     },
     totalAmount: {
         type: Number,

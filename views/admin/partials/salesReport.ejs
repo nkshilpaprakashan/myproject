@@ -25,7 +25,23 @@
 
 <div class="container" style="margin-top: 100px;">
     
-    <h2>Order Page</h2>
+    <h2>Sales Report</h2>
+    <div class="row" style="width: 550px;"> 
+        <div class="col-lg-4">
+        <label class="form-label" for="form3Example1">From Date</label>
+        <input name="fromDate" type="date" value="" id="fromdate" class="form-control"> 
+        </div><div class="col-lg-4">
+        <label class="form-label" for="form3Example1">To Date</label>
+        <input name="toDate" type="date" value="" id="todate" class="form-control"> 
+        </div>
+       
+        <div class="col-lg-4">
+            <label class="form-label" for="form3Example1"></label><br>
+            
+            <!-- <a class="btn btn-sm btn-success" href="" onclick="this.href='/adminloginpage/Dashboard/datewisesales?fromdate=document.getElementById('fromdate').value&todate=document.getElementById('todate').value'" style="align-items: center;justify-content: center; margin-top: 10px;">View</a> -->
+            <a class="btn btn-sm btn-success" href="" onclick="this.href='/adminloginpage/Dashboard/datewisesales?fromdate='+document.getElementById('fromdate').value+'&todate='+document.getElementById('todate').value" style="align-items: center;justify-content: center; margin-top: 10px;">View</a>
+        </div>
+    </div>
     <br> <br>
     <table id="example" class="table">
         <thead>
@@ -35,9 +51,8 @@
                  <th style="background-color:#AC7253">Customer Name</th>
                  <th style="background-color:#AC7253">Total amount</th>
                  <th style="background-color:#AC7253">Payment Mode</th>
-                <th style="background-color:#AC7253">Status</th>
-                <th style="background-color:#AC7253"></th>
-                <th style="background-color:#AC7253">View Details</th>
+                <th style="background-color:#AC7253">Order Status</th>
+               
             </tr>
             
            
@@ -47,72 +62,24 @@
           
             <% if(orderdata.length>0){
             
-    
+                 var totalsales=0 
                 for(let i=0;i<orderdata.length;i++){
+                    totalsales=totalsales+orderdata[i].totalAmount
                     %>
                     
                      <tr style="background-color:#CBA693">
                         
                         <td><a href="" style="text-decoration:none; color:black"><%=orderdata[i].orderNo%></a></td>
-                       
+                        
                         <td><a href="" style="text-decoration:none; color:black"><%=orderdata[i].orderDate%></a></td>
                         <td><a href="" style="text-decoration:none; color:black"><%=orderdata[i].customerData[0].first_name%></a></td>
                         <td><a href="" style="text-decoration:none; color:black"><%=orderdata[i].totalAmount%></a></td>
                         <td><a href="" style="text-decoration:none; color:black"><%=orderdata[i].paymode%></a></td>
+                         <td><a href="" style="text-decoration:none; color:black"><%=orderdata[i].orderstatus%></a></td>
                        
-                        <td>
-                            <div class="col-md-4">
-                                
-                                <select id="orderstatus"class="form-control" name="orderstatus" required style="width: auto;">
-                                  <label for="one">
-                                    <option value="<%=orderdata[i].orderstatus%>" disable selected hidden><%=orderdata[i].orderstatus%></option>
-                                  </label>
-                                  
-                                  <label for="two">
-                                    <option value="Pending">Pending</option>
-                                    </label>
-                                    <label for="three">
-                                        <option value="Processing">Processing</option>
-                                        </label>
-                                        <label for="four">
-                                            <option value="Shipped">Shipped</option>
-                                            </label>
-                                            <label for="five">
-                                                <option value="Delivered">Delivered</option>
-                                                </label>
-                                                <label for="six">
-                                                    <option value="Cancel">Cancel</option>
-                                                    </label>
-                                                    <label for="seven">
-                                                        <option value="Return Requested">Return Requested</option>
-                                                        </label>
-                                                        <label for="seven">
-                                                            <option value="Return Request Approved">Return Request Approved</option>
-                                                            </label>
-                                     
-                               
-                                  
-                                 
-                                 
-                                </select>
-                                
-                                
-                              </div>
-                          
-                        </td>
-                        <td>
-                            <button type="submit">
-                                <a href="" onclick="this.href='/adminloginpage/Dashboard/order/status?id=<%=orderdata[i]._id%>&orderstatus='+document.getElementById('orderstatus').value">
-                                Update
-                            </button>
-                        </td>
-                    
+                  
 
-                        <td>
-                            <button type="submit">
-                                <a href="/adminloginpage/Dashboard/orderdetails/<%= orderdata[i]._id%>" style="text-decoration:none">View Details</a>
-                            </button>
-                        </td>
+                       
                        
                      </tr>
                      
@@ -125,12 +92,18 @@
             }else{
                 %>
         
-                <td colspan="5">No Order found</td>
+                <td colspan="5">No Sales Available</td>
                 <%
             }
             %>
+
+            <td style="font-weight: bold;width: 150px">Total Sales:<%=totalsales%></td>
+
+            
         </tbody>
       </table>
+
+      <a class="btn btn-sm btn-danger" href="/adminloginpage/Dashboard/salesReportDownload" style="align-items: center;justify-content: center;">Download as PDF</a>
 </div>
 
 

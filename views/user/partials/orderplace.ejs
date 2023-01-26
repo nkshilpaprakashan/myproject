@@ -51,29 +51,7 @@
       
                 </div>
               </div>
-              <div class="card mb-4 accordion" id="accordionExample">
-                <div class="card body accordion-item">
-                  <h2 class="accordion-header" id="headingOne">
-                    <div class="accordion-button collapsed text-uppercase text-font h4" type="button"
-                      data-mdb-toggle="collapse" data-mdb-target="#collapseOne" aria-expanded="false"
-                      aria-controls="collapseOne">
-                      Promo/Student Code or Vouchers
-                    </div>
-                  </h2>
-                  <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                    data-mdb-parent="#accordionExample">
-                    <div class="accordion-body">
-                      <div class="form-outline d-flex">
-                        <input type="text" id="form1" class="form-control" />
-                        <label class="form-label" for="form1">Enter code</label>
-                      </div>
-                    </div>
-                  </div>
-      
-      
-      
-                </div>
-              </div>
+              
       
               <div class="card mb-4">
                 <div class="card-body">
@@ -152,15 +130,16 @@
                   <div class="card-footer mt-4">
                     <ul class="list-group list-group-flush">
                       <li
+                        class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-muted">
+                        Subtotal
+                        <span>&#8377 <%=totamt+distot%></span>
+                      </li>
+                      <li
                       class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-muted">
                       Coupon Discount
                       <span>&#8377 <%=distot%></span>
                     </li>
-                      <li
-                        class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0 text-muted">
-                        Subtotal
-                        <span>&#8377 <%=totamt%></span>
-                      </li>
+                      
                       <li
                         class="list-group-item d-flex justify-content-between align-items-center px-0 fw-bold text-uppercase">
                         Total to pay
@@ -210,7 +189,7 @@
               </div>
               <div class="text-center">
             
-                <button id="placeorder" type="submit" name="placeorder" class="btn button-order col-md-10"> Place order</button>
+                <button id="placeorder" type="submit" name="placeorder" class="btn btn-lg btn-danger button-order col-md-10"> Place order</button>
                 
               </div>
             </form>

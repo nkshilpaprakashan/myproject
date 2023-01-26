@@ -54,11 +54,19 @@ router.post('/adminloginpage/Dashboard/products/editproduct/saveEditproduct',upl
 
 router.get('/adminloginpage/Dashboard/order',adminController.getorder)
 
-router.get('/adminloginpage/Dashboard/order/salesReport',adminController.salesReport)
+router.get('/adminloginpage/Dashboard/orderdetails/:id',adminController.orderDetails)
 
-router.get('/adminloginpage/Dashboard/order/delivered/:id',adminController.delivered)
+router.get('/adminloginpage/Dashboard/salesReportDownload',adminController.salesReportDownload)
 
-router.get('/adminloginpage/Dashboard/order/pending/:id',adminController.orderPending)
+router.get('/adminloginpage/Dashboard/salesReport',adminController.salesReport)
+
+router.get('/adminloginpage/Dashboard/datewisesales',adminController.dateWiseSales)
+
+
+
+
+
+router.get('/adminloginpage/Dashboard/order/status',adminController.orderStatus)
 
 router.get('/adminloginpage/Dashboard/coupon',adminController.coupon)
 
@@ -68,9 +76,9 @@ router.post('/adminloginpage/Dashboard/coupon/addcoupon',adminController.postAdd
 
 router.get('/adminloginpage/Dashboard/coupon/editcoupon/:id',adminController.editCoupon)
 
-router.get('/adminloginpage/Dashboard/coupon/list/:id',adminController.couponList)
+router.patch('/adminloginpage/Dashboard/coupon/list',adminController.couponList)
 
-router.get('/adminloginpage/Dashboard/coupon/unlist/:id',adminController.couponUnlist)
+router.patch('/adminloginpage/Dashboard/coupon/unlist',adminController.couponUnlist)
 
 router.post('/adminloginpage/Dashboard/coupon/unlist/saveEditcoupon/:id',adminController.saveeditcoupon)
 

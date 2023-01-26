@@ -8,10 +8,12 @@ const pdf = require('pdf-creator-node')
 const fs = require('fs')
 const path = require('path')
 const {log} = require('console')
+const { order } = require('paypal-rest-sdk')
 
 var objectId = require('mongodb').ObjectId
 
 function login(req, res) {
+    try{
     if (req.session.admin) {
         res.redirect('/adminloginpage/Dashboard')
     } else {
@@ -21,21 +23,53 @@ function login(req, res) {
         req.session.destroy()
     }
 
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 async function adminDashboard(req, res) {
+    try{
     if (req.session.admin) {
         let userdata = await userCollection.find()
         let categorydata = await Category.find()
         let productdata = await Product.find()
         let orderdata = await Order.find()
+        
+
+       let dateorderdate=await Order.aggregate([{$project:{"orderDate":1,_id:0}}])
+       let date=new Date(dateorderdate[0].orderDate)
+       console.log(date)
+       console.log(typeof(date))
+
+       let monthlysale=await Order.aggregate([
+        {
+          $group: {
+             _id: {
+                month: { $month: "$orderDate"},
+                year: { $year: "$orderDate" } 
+             },
+             total: {
+                $sum: "$totalAmount"
+             } 
+          }
+        }
+     ])
+
+        
         let ordertot=0
+        let totalCod=0
+       let totalPaypal=0
         
         if(orderdata){
             
             for(let i=0;i<orderdata.length;i++){
                 ordertot=ordertot+orderdata[i].totalAmount
+                if(orderdata[i].paymode==="cod"){
+                    totalCod=totalCod+orderdata[i].totalAmount
+                }else{
+                    totalPaypal=totalPaypal+orderdata[i].totalAmount
+                }
 
             }
 
@@ -45,15 +79,19 @@ async function adminDashboard(req, res) {
             fulldata: userdata,
             categorydata: categorydata,
             productdata:productdata,
-            orderdata:orderdata,ordertot
+            orderdata:orderdata,ordertot,
+            totalCod,totalPaypal,monthlysale
         });
     } else {
         res.redirect('/adminloginpage')
     }
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 function validation(req, res) {
+    try{
     let adminEmail = 'admin@gmail.com'
     let adminPassword = '1'
     if (req.body.email === adminEmail && req.body.password === adminPassword) {
@@ -63,7 +101,9 @@ function validation(req, res) {
         req.session.adminanything = true
         res.redirect('/adminloginpage')
     }
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 function adminLogout(req, res) {
     req.session.destroy()
@@ -71,6 +111,7 @@ function adminLogout(req, res) {
 }
 
 async function customers(req, res) {
+    try{
 
     if (req.session.admin) {
         let userdata = await userCollection.find()
@@ -78,7 +119,9 @@ async function customers(req, res) {
     } else {
         res.redirect('/adminloginpage',)
     }
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 async function blockuser(req, res) {
@@ -94,6 +137,9 @@ async function blockuser(req, res) {
         });
     } catch (error) {
         console.log(error.message);
+        
+            res.redirect('/errorpage')
+       
 
     }
 }
@@ -110,11 +156,15 @@ async function unblockuser(req, res) {
         });
     } catch (error) {
         console.log(error.message);
+        
+            res.redirect('/errorpage')
+       
     }
 }
 
 
 async function customerEdit(req, res) {
+    try{
     let userid = req.params.id
     // res.render('editpage')
     userCollection.findByIdAndUpdate({
@@ -131,9 +181,12 @@ async function customerEdit(req, res) {
 
         }
     })
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 async function updateCustomer(req, res) {
+    try{
 
     let userid = req.params.id
     userCollection.findByIdAndUpdate({
@@ -150,18 +203,24 @@ async function updateCustomer(req, res) {
 
         }
     })
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 async function deleteCustomer(req, res) {
+    try{
     req.session.delete = req.params.id
     await userCollection.deleteOne({
         _id: objectId(req.session.delete)
     })
     res.redirect('/adminloginpage/Dashboard/customers')
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 async function products(req, res) {
+    try{
     if (req.session.admin) {
         let productdata = await Product.find()
         let categorydata = await Category.find()
@@ -174,10 +233,13 @@ async function products(req, res) {
     } else {
         res.redirect('/adminloginpage',)
     }
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 async function addproduct(req, res) {
+    try{
     if (req.session.admin) {
         let groupdata = await Group.find()
         let categorydata = await Category.find({unlist: false})
@@ -189,7 +251,9 @@ async function addproduct(req, res) {
         res.redirect('/adminloginpage',)
     }
 
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 async function saveProduct(req, res) {
@@ -221,23 +285,29 @@ async function saveProduct(req, res) {
     } catch (error) {
 
         res.status(400).send(error);
-
+       
+            res.redirect('/errorpage')
+        
 
     }
 }
 
 
 async function categories(req, res) {
+    try{
     if (req.session.admin) {
         let categorydata = await Category.find()
         res.render('./admin/partials/categoryPage', {categorydata: categorydata});
     } else {
         res.redirect('/adminloginpage',)
     }
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 async function addcategory(req, res) {
+    try{
     if (req.session.admin) {
         let groupdata = await Group.find()
         console.log(groupdata)
@@ -247,7 +317,9 @@ async function addcategory(req, res) {
         res.redirect('/adminloginpage',)
     }
 
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 async function createCategory(req, res) {
     try {
@@ -275,11 +347,14 @@ async function createCategory(req, res) {
     } catch (error) {
 
         res.status(400).send(error);
-
+        
+            res.redirect('/errorpage')
+       
     }
 }
 
 async function editcategory(req, res) {
+    try{
     let categoryid = req.params.id
     let groupdata = await Group.find()
 
@@ -288,10 +363,13 @@ async function editcategory(req, res) {
         categorydata: updateData,
         group: groupdata
     })
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 function saveeditcategory(req, res) {
+    try{
     let categoryid = req.params.id
 
     Category.findByIdAndUpdate({
@@ -308,10 +386,13 @@ function saveeditcategory(req, res) {
 
         }
     })
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 async function list(req, res) {
+   
 
     const catdata = await Category.findOne({_id: req.params.id})
     if (catdata) {
@@ -381,6 +462,7 @@ async function unlist(req, res) {
 let editData;
 
 async function editproduct(req, res) {
+    try{
     editData = req.query.id
     let groupdata = await Group.find()
     let categorydata = await Category.find()
@@ -391,9 +473,12 @@ async function editproduct(req, res) {
         group: groupdata,
         category: categorydata
     })
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 async function saveeditproduct(req, res) {
+    try{
     console.log(req.query.id);
     await Product.updateOne({
         _id: editData
@@ -417,7 +502,9 @@ async function saveeditproduct(req, res) {
 
     res.redirect('/adminloginpage/Dashboard/products')
 
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 async function productlist(req, res) {
@@ -452,11 +539,15 @@ async function productunlist(req, res) {
         });
     } catch (error) {
         console.log(error.message);
+        
+            res.redirect('/errorpage')
+       
     }
 }
 
 
 async function getorder(req, res) {
+    try{
     if (req.session.admin) { // let orderdata=await Order.find()
         let userdata = await userCollection.find()
 
@@ -467,9 +558,10 @@ async function getorder(req, res) {
                     foreignField: '_id',
                     as: 'customerData'
                 }
-            }])
+                 }, { $sort : { orderNo : -1 } }
+                ])
 
-        console.log(orderdata);
+        
 
 
         res.render('./admin/partials/order', {
@@ -479,10 +571,13 @@ async function getorder(req, res) {
     } else {
         res.redirect('/adminloginpage',)
     }
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
-async function salesReport(req, res) {
+async function salesReportDownload(req, res) {
+   
 
     let orderData = await Order.aggregate([{
             $lookup: {
@@ -497,17 +592,18 @@ async function salesReport(req, res) {
 
 
     for (let i = 0; i < orderData.length; i++) {
-        let status
+        let orderstatus
         if (orderData[i].status) {
-            status = 'Delivered'
+            orderstatus = 'Delivered'
         } else {
-            status = 'Pending'
+            orderstatus = 'Pending'
         }
+        
         let order = {
-
+            orderNo:orderData[i].orderNo,
             first_name: orderData[i].customerData[0].first_name,
             amount: orderData[i].totalAmount,
-            status: status,
+            orderstatus: orderstatus,
             orderDate: orderData[i].orderDate
         }
         salesData.push(order)
@@ -544,6 +640,7 @@ async function salesReport(req, res) {
 
 async function delivered(req, res) {
 
+
     await Order.findOne({_id: req.params.id})
 
 
@@ -566,19 +663,21 @@ async function delivered(req, res) {
     }
 }
 
-async function orderPending(req, res) {
+async function orderStatus(req, res) {
 
-    await Order.findOne({_id: req.params.id})
+    await Order.findOne({_id: req.query.id})
 
 
     try {
         await Order.findByIdAndUpdate({
-            _id: req.params.id
+            _id: req.query.id
         }, {
             $set: {
-                status: true
+                orderstatus: req.query.orderstatus
             }
         })
+
+       
 
 
         res.redirect('/adminloginpage/Dashboard/order');
@@ -592,6 +691,8 @@ async function orderPending(req, res) {
 
 
 async function coupon(req, res) {
+
+    try{
     if (req.session.admin) {
         let coupondata = await Coupon.find()
        
@@ -604,10 +705,13 @@ async function coupon(req, res) {
     } else {
         res.redirect('/adminloginpage',)
     }
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 async function addCoupon(req, res) {
+    try{
     if (req.session.admin) {
         let groupdata = await Group.find()
         let categorydata = await Category.find({unlist: false})
@@ -619,7 +723,9 @@ async function addCoupon(req, res) {
         res.redirect('/adminloginpage',)
     }
 
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 async function postAddCoupon(req, res) {
@@ -656,6 +762,7 @@ async function postAddCoupon(req, res) {
 
 
 async function editCoupon(req, res) {
+    try{
     let couponid = req.params.id
    
 
@@ -663,51 +770,63 @@ async function editCoupon(req, res) {
     res.render('./admin/partials/editCoupon', {
         coupondata
     })
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 
 async function couponList(req, res) {
+    try{
 
     if (req.session.admin){
+        const coupon=req.body
+        const couponid=coupon.couponid
         await Coupon.findByIdAndUpdate({
-            _id: req.params.id
+            _id: couponid
         }, {
             $set: {
                 unlist: false
             }
         })
+        res.json({result:true})
 
-
-        res.redirect('/adminloginpage/Dashboard/coupon');
+        // res.redirect('/adminloginpage/Dashboard/coupon');
 
 
     }
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 
 
 async function couponUnlist(req, res) {
+    try{
     if (req.session.admin){
-    
+        const coupon=req.body
+        const couponid=coupon.couponid
         await Coupon.updateOne({
-            _id: req.params.id
+            _id: couponid
         }, {
             $set: {
                 unlist: true
             }
         }).then(() => {
-            res.redirect('/adminloginpage/Dashboard/coupon');
+            res.json({result:true})
         });
     
 }
 
-}
+}catch(error){
+    res.redirect('/errorpage')
+}}
 
 
 
 async function saveeditcoupon(req, res) {
+    try{
     
     
     await Coupon.updateOne({
@@ -726,7 +845,130 @@ async function saveeditcoupon(req, res) {
 
     res.redirect('/adminloginpage/Dashboard/coupon')
 
+}catch(error){
+    res.redirect('/errorpage')
+}}
+
+
+async function orderDetails(req, res) {
+    try {
+        if (req.session.admin){
+            const orderdata = await Order.findOne({_id: req.params.id})
+            
+            let userdetails = await userCollection.findOne({ _id: objectId(orderdata.userId)})
+
+            
+        let orderdataproduct = await Order.aggregate([
+            {
+                $match: {
+                    _id: objectId(req.params.id)
+                }
+            }, {
+                $lookup: {
+                    from: "products",
+                    localField: "products.productId",
+                    foreignField: "_id",
+                    as: "productinfo"
+                }
+            }, {
+                $unwind: "$productinfo"
+            }
+
+        ])
+
+        console.log(orderdataproduct)
+                   
+ res.render('./admin/partials/orderviewdetails',{orderdata,userdetails,orderdataproduct});
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
 }
+
+
+
+async function salesReport(req, res) {
+    try{
+        if (req.session.admin) { // let orderdata=await Order.find()
+            let userdata = await userCollection.find()
+    
+            let orderdata = await Order.aggregate([
+                {$match:{
+                    orderstatus:'Delivered'
+                }},
+                   { $lookup: {
+                        from: 'usercollections',
+                        localField: 'userId',
+                        foreignField: '_id',
+                        as: 'customerData'
+                    }
+                     }, { $sort : { orderNo : -1 } }
+                    ])
+    
+            
+    
+    
+            res.render('./admin/partials/salesReport', {
+                orderdata: orderdata,
+                userdata: userdata
+            });
+        } else {
+            res.redirect('/adminloginpage',)
+        }
+    }
+    catch(error){
+    
+    res.redirect('/errorpage')
+    }
+}
+
+
+async function dateWiseSales(req, res) {
+    
+        if (req.session.admin) {
+            let userdata = await userCollection.find()
+
+           console.log(Date(req.query.todate))
+           console.log(req.query.fromdate)
+    let fromdate=new Date(req.query.fromdate)
+    let todate=new Date(req.query.todate)
+    console.log(todate)
+            let orderdata = await Order.aggregate([
+                {$match:{$and:[
+                    {orderstatus:'Delivered'},
+                    {orderDate:{$gte:fromdate}},
+                    {orderDate:{$lte:todate}}
+                ]}
+                   
+                },
+                   { $lookup: {
+                        from: 'usercollections',
+                        localField: 'userId',
+                        foreignField: '_id',
+                        as: 'customerData'
+                    }
+                     }, { $sort : { orderNo : -1 } }
+                    ])
+    
+            
+    console.log(orderdata)
+    
+            res.render('./admin/partials/salesReport', {
+                orderdata: orderdata,
+                userdata: userdata
+            });
+        } else {
+            res.redirect('/adminloginpage',)
+        }
+    }
+    
+
+
+
+
+
+
+
 
 module.exports = {
     login,
@@ -752,17 +994,20 @@ module.exports = {
     editproduct,
     saveeditproduct,
     getorder,
+    salesReportDownload,
     salesReport,
     productlist,
     productunlist,
     delivered,
-    orderPending,
+    orderStatus,
     coupon,
     addCoupon,
     postAddCoupon,
     editCoupon,
     couponList,
     couponUnlist,
-    saveeditcoupon
+    saveeditcoupon,
+    orderDetails,
+    dateWiseSales
 
 }

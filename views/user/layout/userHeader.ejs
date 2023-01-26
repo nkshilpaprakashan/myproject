@@ -69,19 +69,19 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                        <li class="nav-item">
+                        <li class="nav-item mx-3">
                             <a class="nav-link active" aria-current="page" href="/">
-                                <img src="/public/images/logo.png" style="height:30px ;width:30px ;"><span> <i class="fa-solid fa-house"></i></span>
+                                <img src="/public/images/logo.png" style="height:30px ;width:30px" class="mx-2"><span> <i class="fa-solid fa-house  mx-2"></i></span>
                             </a>
                         </li>
                         </li>
                         <% if(sessionData) {%>
-                        <a class="nav-link" href="/addtocart">
+                        <a class="nav-link mx-2" href="/addtocart">
                             <i class='fa fa-cart-plus' style='color: rgb(12, 52, 138);font-size:16px'><span id="cartcount" class="w3-badge w3-green" style="font-size: 15px;"></span></i>
                             <span class="sr-only">(current)</span>
                         </a>
                     
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown  ">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-user"></i>
                         </a>
@@ -102,7 +102,7 @@
                     </li>
                     <% }else{%>
                         
-                        <button class="btn btn-outline-success" type="submit"><a href="/userlogin">Login</a></button>
+                        <button class="btn btn-outline-success" type="submit" class=" mx-2"><a href="/userlogin">Login</a></button>
 
                         <% } %> 
 

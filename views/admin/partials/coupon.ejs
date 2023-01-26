@@ -11,15 +11,11 @@
      rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     
         <!-- Adding jquery connection -->
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        
+        
         <!-- Adding datatable connection -->
         <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-        <!-- Initialising datatable connection -->
-        <script>
-            $(document).ready(function () {
-                $('#example').DataTable();
-            });
-        </script>
+       
 </head>
 
 <%-include('../layout/adminHeader')%>
@@ -75,17 +71,15 @@
                     </button>
                 </td>
                 <td>
+                <div id="couponAction<%= coupondata[i]._id%>">
                     <% if(coupondata[i].unlist===true) {%>
-                        <button type="submit" img src>
-                        <a href="/adminloginpage/Dashboard/coupon/list/<%= coupondata[i]._id%>"  onclick="return confirm('CLICK OK TO DISABLE COUPON')">Enable</a>
-                    </button>
+                        <button class="btn-sm btn-primary" onclick="couponlist('<%= coupondata[i]._id%>')">List</button>
                        
                       <%}else{%>
-                        <button type="submit">
-                        <a  href="/adminloginpage/Dashboard/coupon/unlist/<%= coupondata[i]._id%>"  onclick="return confirm('CLICK OK TO ENABLE COUPON')">Disable</a>
-                       </button>
+                        <button class="btn-sm btn-success" onclick="couponunlist('<%= coupondata[i]._id%>')">Unlist</button>
                         <%}%>
-                    </td>
+                    </div>
+                </td>
 
             </tr>
             <%
@@ -100,6 +94,44 @@
     %>
     <button><a href="/adminloginpage/Dashboard/coupon/addcoupon">Add Coupon</a></button>
 
+
+
+    <script>
+        function couponlist(id){
+            $.ajax({
+                url:'/adminloginpage/Dashboard/coupon/list',
+                method:'patch',
+                data:{
+                    couponid:id
+                },
+                success:(res)=>{
+                    console.log(res.result)
+                    if(res.result){
+                        $('#couponAction' + id).load(location.href + ' #couponAction' + id)
+                        // location.reload()
+                    }
+                }
+
+            })
+        }
+        function couponunlist(id){
+            $.ajax({
+                url:'/adminloginpage/Dashboard/coupon/unlist',
+                method:'patch',
+                data:{
+                    couponid:id
+                },
+                success:(res)=>{
+                    if(res.result){
+                        $('#couponAction' + id).load(location.href + ' #couponAction' + id)
+                        // location.reload()
+                    }
+                }
+
+            })
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     
 </body>
 </html>

@@ -45,7 +45,7 @@ const productSchema=new mongoose.Schema({
     },
     
     available_quantity:{
-        type:String,
+        type:Number,
         required:true
         
     },
